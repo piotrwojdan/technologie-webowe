@@ -81,6 +81,7 @@ function create_posttype(){
         'publicly_queryable'  => true,
         'capability_type'     => 'post',
         'show_in_rest' => true,
+        'register_meta_box_cb' => 'add_expiry_date_metabox',
   
     );
       
@@ -104,7 +105,7 @@ function insert_adv1($content){
         
        if ( ! empty( $content ) ) {
             $ad = $adsQuery[rand(0,count($adsQuery)-1)];
-            $content = $ad ->post_content .$content;
+            $content = "<div class='ramka'>".$ad ->post_content."</div>" .$content;
         }
         
     }
@@ -113,3 +114,75 @@ function insert_adv1($content){
 }
 
 add_filter( 'the_content', 'insert_adv1' );
+
+function ads_styles(){
+    wp_register_style('styles', plugins_url('/css/style.css', __FILE__));
+    wp_enqueue_style('styles');
+}
+add_action('init', 'ads_styles');
+
+function add_expiry_date_metabox() {
+    add_meta_box(
+        'expiry_date_metabox',
+        'Expiry Date',
+        'render_expiry_date_metabox',
+        'my_custom_post_type',
+        'side',
+        'default'
+    );
+}
+
+function render_expiry_date_metabox($post) {
+    // Retrieve the existing value of the expiry date field
+    $expiry_date = get_post_meta($post->ID, 'expiry_date', true);
+    ?>
+    <p><label for="expiry_date_field">Expiry Date:</label></p>
+    <p><input type="datetime-local" id="expiry_date_field" name="expiry_date_field" value="<?php echo esc_attr($expiry_date); ?>"></p>
+    <?php
+}
+
+function save_expiry_date_metabox($post_id) {
+    if (array_key_exists('expiry_date_field', $_POST)) {
+        update_post_meta(
+            $post_id,
+            'expiry_date',
+            sanitize_text_field($_POST['expiry_date_field'])
+        );
+    }
+}
+add_action('save_post_my_custom_post_type', 'save_expiry_date_metabox');
+
+function delete_expired(){
+
+    $args = array(
+        'post-type' = 'ads',
+        'post-status' = 'publish',
+        'meta_query' => array(
+            array(
+                'key' => 'expiry_date',
+                'value' => date('Y-m-d'),
+                'compare' => '<=',
+                'type' => 'DATE'
+            )
+        )
+    );
+
+    $ads = new WP_Query($args);
+
+    if($ads->have_posts()){
+        while($ads->have_posts()){
+            $publishTime = 
+        }
+    }
+
+     $expiry_date = get_post_meta($post_id, 'expiry_date', true);
+
+}
+
+add_action('wp', 'schedule_expired_posts_deletion');
+function schedule_expired_posts_deletion() {
+    if (!wp_next_scheduled('delete_expired_posts_event')) {
+        wp_schedule_single_event(time() ,"daily", 'delete_expired_posts_event');
+    }
+}
+
