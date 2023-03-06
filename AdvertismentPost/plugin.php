@@ -153,47 +153,40 @@ function save_expiry_date_metabox($post_id) {
 add_action('save_post_ads', 'save_expiry_date_metabox');
 
 function delete_expired(){
-
+    
     $args = array(
         'post-type' => 'ads',
-        'post-status' => 'publish',
         'meta_query' => array(
             array(
                 'key' => 'expiry_date',
-                'value' => date('Y-m-d'),
-                'compare' => '<=',
-                'type' => 'DATE'
+                'value' => date('Y-m-d H:i:s'),
+                'compare' => '<',
+                'type' => 'DATETIME'
             )
         )
     );
+    
 
     $ads = new WP_Query($args);
 
     if($ads->have_posts()){
         while($ads->have_posts()){
-            $postID = get_the_ID();
-            wp_delete_post($postID);
+            echo $ads->the_post();
+            wp_delete_post(get_the_ID(), true);
         }
         wp_reset_postdata();
     }
 
-     $expiry_date = get_post_meta($post_id, 'expiry_date', true);
-
 }
 
-add_action('init', 'schedule_expired_posts_deletion');
+
 function schedule_expired_posts_deletion() {
     if (!wp_next_scheduled('delete_expired_posts_event')) {
-        wp_schedule_single_event(time() ,"5_minutes", 'delete_expired_posts_event');
+        wp_schedule_single_event(time() ,"minute", 'delete_expired_posts_event');
     }
 }
+// wp_schedule_event(time(), 'minute', 'delete_expired_posts_event');
+add_action('wp', 'schedule_expired_posts_deletion');
 add_action('delete_expired_posts_event', 'delete_expired');
 
-function add_5_minute_interval($schedules) {
-    $schedules['5_minutes'] = array(
-        'interval' => 300,
-        'display' => __('Every 5 minutes')
-    );
-    return $schedules;
-}
-add_filter('cron_schedules', 'add_5_minute_interval');
+?>
