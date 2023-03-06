@@ -9,40 +9,6 @@
  * Author: Magdalena Sołtysiak i Piotr Wojdan
  */
 
- function naph_admin_actions_register_menu(){
-    add_options_page("Advertisement Plugin", "Advertisement Management", 'manage_options', "naph", "render_expiry_date_metabox");
-}
-   
-add_action('admin_menu', 'naph_admin_actions_register_menu'); 
-
-function naph_admin_page(){
-    global $_POST;
-
- // process changes from form
-    if(isset($_POST['naph_do_change'])){
-        if($_POST['naph_do_change'] == 'Y'){
-        $opDays = $_POST['naph_days'];
-        echo '<div class="notice notice-success isdismissible"><p>Settings saved.</p></div>';
-        update_option('naph_days', $opDays);
-        }
-    } 
-
-
-    $opDays = get_option('naph_days');
-?>
-
-<div class="wrap">
-    <h1>Add New Advertisement</h1>
-        <form name="naph_form" method="post">
-            <input type="hidden" name="naph_do_change" value="Y">
-            <p>
-            <input type="text" name="naph_days"  value="<?php echo $opDays ?>">  </p>
-            <p class="submit"><input type="submit" value="Add advertisement"></p>
-        </form>
-</div>
-
-<?php
-}
 
 function create_posttype(){
     $labels = array(
@@ -96,18 +62,27 @@ function insert_adv1($content){
     
     $args = array (
         'post_type' => 'ads',
-        'post_status' => 'publish'
+        'post_status' => 'publish',
+        'meta_query' => array(
+            array(
+                'key' => 'expiry_date',
+                'value' => date('Y-m-d H:i:s'),
+                'compare' => '>',
+                'type' => 'DATETIME'
+            )
+        )
     );
 
     $adsQuery = get_posts($args);
-
-    if ( is_single() ) {
-        
-       if ( ! empty( $content ) ) {
-            $ad = $adsQuery[rand(0,count($adsQuery)-1)];
-            $content = "<div class='ramka'>".$ad ->post_content."</div>" .$content;
+    if(!empty( $adsQuery)){
+        if ( is_single() ) {
+            
+        if ( ! empty( $content ) ) {
+                $ad = $adsQuery[rand(0,count($adsQuery)-1)];
+                $content = "<div class='ramka'>".$ad ->post_content."</div>" .$content;
+            }
+            
         }
-        
     }
     return $content;
 
@@ -152,41 +127,42 @@ function save_expiry_date_metabox($post_id) {
 }
 add_action('save_post_ads', 'save_expiry_date_metabox');
 
-function delete_expired(){
+
+
+// function delete_expired(){
     
-    $args = array(
-        'post-type' => 'ads',
-        'meta_query' => array(
-            array(
-                'key' => 'expiry_date',
-                'value' => date('Y-m-d H:i:s'),
-                'compare' => '<',
-                'type' => 'DATETIME'
-            )
-        )
-    );
-    
+//     $args = array(
+//         'post-type' => 'ads',
+//         'meta_query' => array(
+//             array(
+//                 'key' => 'expiry_date',
+//                 'value' => date('Y-m-d H:i:s'),
+//                 'compare' => '<',
+//                 'type' => 'DATETIME'
+//             )
+//         )
+//     );
 
-    $ads = new WP_Query($args);
+//     // $ads = new WP_Query($args);
 
-    if($ads->have_posts()){
-        while($ads->have_posts()){
-            echo $ads->the_post();
-            wp_delete_post(get_the_ID(), true);
-        }
-        wp_reset_postdata();
-    }
+//     // if($ads->have_posts()){
+//     //     while($ads->have_posts()){
+//     //         echo $ads->the_post();
+//     //         wp_delete_post(get_the_ID(), true);
+//     //     }
+//     //     wp_reset_postdata();
+//     // }
 
-}
+// }
 
 
-function schedule_expired_posts_deletion() {
-    if (!wp_next_scheduled('delete_expired_posts_event')) {
-        wp_schedule_single_event(time() ,"minute", 'delete_expired_posts_event');
-    }
-}
-// wp_schedule_event(time(), 'minute', 'delete_expired_posts_event');
-add_action('wp', 'schedule_expired_posts_deletion');
-add_action('delete_expired_posts_event', 'delete_expired');
+// function schedule_expired_posts_deletion() {
+//     if (!wp_next_scheduled('delete_expired_posts_event')) {
+//         wp_schedule_single_event(time() ,"daily", 'delete_expired_posts_event');
+//     }
+// }
+// add_action('delete_expired_posts_event', 'delete_expired');
+// wp_schedule_event(time(), 'daily', 'delete_expired_posts_event');
+// add_action('wp', 'schedule_expired_posts_deletion');
 
 ?>
