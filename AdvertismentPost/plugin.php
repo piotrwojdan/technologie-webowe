@@ -95,7 +95,7 @@ function insert_adv1($content){
             $ad = $ads[rand(0,count($ads)-1)];
             $content = "<div class='ramka'>".$ad ->post_content."</div>" .$content;
         } else {
-            $content = "<div class='ramka'>".$ad ->post_content;
+            $content = "<div class='ramka'>".$ad ->post_content."<div>";
         }
         
     }
