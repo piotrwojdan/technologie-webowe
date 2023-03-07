@@ -74,12 +74,28 @@ function insert_adv1($content){
     );
 
     $adsQuery = get_posts($args);
+    $ads = array();
+    $j = 0;
+    
+    foreach ($adsQuery as $ad){
+        if (!empty($ad->post_content)) {
+            $ads[$j] = $ad;
+            $j++;
+        }
+    }
+//    $ads = $adsQuery;
+    
+    if (empty($ads)) {
+        return $content;
+    }
 
     if ( is_single() ) {
         
        if ( ! empty( $content ) ) {
-            $ad = $adsQuery[rand(0,count($adsQuery)-1)];
+            $ad = $ads[rand(0,count($ads)-1)];
             $content = "<div class='ramka'>".$ad ->post_content."</div>" .$content;
+        } else {
+            $content = "<div class='ramka'>".$ad ->post_content;
         }
         
     }
