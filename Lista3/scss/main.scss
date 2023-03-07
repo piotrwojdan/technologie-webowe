@@ -1,0 +1,62 @@
+$backgroundColor: #D4D9DB;
+$navBarColor: #808080;
+
+
+
+.navbar {
+
+    nav {
+        margin: 0;
+        background-color: $navBarColor;
+        overflow: hidden;
+        //padding: 0.5rem;
+        ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        
+        }
+       
+        li { 
+            float: left;
+        }
+    
+        a {
+        display: block;
+        padding: 18px 24px;
+        text-decoration: none;
+        color: white;
+
+        &:hover {
+            background-color: #333;
+            font-size: 18px;
+            margin: 0;
+        }
+        }
+    
+        li.navbar-right {
+            float: right;
+        }
+    }
+    
+
+}
+
+body {
+    background-color: $backgroundColor;
+}
+
+#photo {
+    width: 100%;
+}
+
+.container {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+    width: 80%;
+}
+  
+
+

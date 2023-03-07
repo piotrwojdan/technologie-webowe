@@ -1,0 +1,43 @@
+.navbar nav {
+  margin: 0;
+  background-color: #808080;
+  overflow: hidden;
+}
+.navbar nav ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.navbar nav li {
+  float: left;
+}
+.navbar nav a {
+  display: block;
+  padding: 18px 24px;
+  text-decoration: none;
+  color: white;
+}
+.navbar nav a:hover {
+  background-color: #333;
+  font-size: 18px;
+  margin: 0;
+}
+.navbar nav li.navbar-right {
+  float: right;
+}
+
+body {
+  background-color: #D4D9DB;
+}
+
+#photo {
+  width: 100%;
+}
+
+.container {
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+  width: 80%;
+}/*# sourceMappingURL=main.css.map */
