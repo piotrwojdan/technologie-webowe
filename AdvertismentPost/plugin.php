@@ -123,7 +123,7 @@ function add_expiry_date_metabox() {
 }
 
 function render_expiry_date_metabox($post) {
-    // Retrieve the existing value of the expiry date field
+
     $expiry_date = get_post_meta($post->ID, 'expiry_date', true);
     ?>
     <p><label for="expiry_date_field">Expiry Date:</label></p>
