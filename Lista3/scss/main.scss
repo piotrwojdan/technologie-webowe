@@ -1,53 +1,60 @@
 $backgroundColor: #D4D9DB;
 $navBarColor: #808080;
 
+@import url('https://fonts.googleapis.com/css?family=Dosis&display=swap');
 
 
 .navbar {
+    background-color: $navBarColor;
 
     nav {
         margin: 0;
-        background-color: $navBarColor;
         overflow: hidden;
-        //padding: 0.5rem;
-        ul {
-        margin: 0;
-        padding: 0;
-        list-style: none;
-        
-        }
-       
-        li { 
-            float: left;
-        }
-    
-        a {
-        display: block;
-        padding: 18px 24px;
-        text-decoration: none;
-        color: white;
 
-        &:hover {
-            background-color: #333;
-            font-size: 18px;
+        ul {
             margin: 0;
+            padding: 0;
+            list-style: none;
+
         }
+
+        li {
+            float: left;
+            margin: auto;
+
+            &.navbar-right {
+                float: right;
+            }
         }
-    
-        li.navbar-right {
-            float: right;
+
+        a {
+            display: block;
+            padding: 18px 24px;
+            text-decoration: none;
+            color: white;
+
+            &:hover {
+                background-color: #333;
+                font-size: 18px;
+                box-shadow: rgba($color: #333, $alpha: 45.0) ;
+            }
         }
+
+
     }
-    
+
 
 }
 
 body {
     background-color: $backgroundColor;
+    margin: 0;
+    font-family: "Dosis", sans-serif;
 }
 
 #photo {
     width: 100%;
+    margin-top: 1rem;
 }
 
 .container {
@@ -57,6 +64,24 @@ body {
     margin-left: auto;
     width: 80%;
 }
-  
 
 
+#tytul {
+    text-align: center;
+    font-weight: 300;
+    font-size: 3rem;
+}
+
+// @mixin padding-sides($padding){
+//     padding-left: $padding;
+//     padding-right: $padding;
+// }
+
+// .logo {
+//     @include padding-sides(3rem);
+//     font-size: 30px;
+// }
+
+// .logo:hover {
+//     @include padding-sides(3rem);
+// }

@@ -1,43 +1,47 @@
-.navbar nav {
-  margin: 0;
-  background-color: #808080;
-  overflow: hidden;
-}
-.navbar nav ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-.navbar nav li {
-  float: left;
-}
-.navbar nav a {
-  display: block;
-  padding: 18px 24px;
-  text-decoration: none;
-  color: white;
-}
-.navbar nav a:hover {
-  background-color: #333;
-  font-size: 18px;
-  margin: 0;
-}
-.navbar nav li.navbar-right {
-  float: right;
-}
+@import url("https://fonts.googleapis.com/css?family=Dosis&display=swap");
+.navbar {
+  background-color: #808080; }
+  .navbar nav {
+    margin: 0;
+    overflow: hidden; }
+    .navbar nav ul {
+      margin: 0;
+      padding: 0;
+      list-style: none; }
+    .navbar nav li {
+      float: left;
+      margin: auto; }
+      .navbar nav li.navbar-right {
+        float: right; }
+    .navbar nav a {
+      display: block;
+      padding: 18px 24px;
+      text-decoration: none;
+      color: white; }
+      .navbar nav a:hover {
+        background-color: #333;
+        font-size: 18px;
+        box-shadow: #333333; }
 
 body {
   background-color: #D4D9DB;
-}
+  margin: 0;
+  font-family: "Dosis", sans-serif; }
 
 #photo {
   width: 100%;
-}
+  margin-top: 1rem; }
 
 .container {
   padding-right: 15px;
   padding-left: 15px;
   margin-right: auto;
   margin-left: auto;
-  width: 80%;
-}/*# sourceMappingURL=main.css.map */
+  width: 80%; }
+
+#tytul {
+  text-align: center;
+  font-weight: 300;
+  font-size: 3rem; }
+
+/*# sourceMappingURL=main.css.map */
