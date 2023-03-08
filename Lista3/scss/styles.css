@@ -23,25 +23,4 @@
         font-size: 18px;
         box-shadow: #333333; }
 
-body {
-  background-color: #D4D9DB;
-  margin: 0;
-  font-family: "Dosis", sans-serif; }
-
-#photo {
-  width: 100%;
-  margin-top: 1rem; }
-
-.container {
-  padding-right: 15px;
-  padding-left: 15px;
-  margin-right: auto;
-  margin-left: auto;
-  width: 80%; }
-
-#tytul {
-  text-align: center;
-  font-weight: 300;
-  font-size: 3rem; }
-
-/*# sourceMappingURL=main.css.map */
+/*# sourceMappingURL=styles.css.map */
