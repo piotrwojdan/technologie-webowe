@@ -1,7 +1,12 @@
 @import url('https://fonts.googleapis.com/css?family=Dosis&display=swap');
 // przciski zrobic do dziedziczenia
+@import "pages/main";
 @import "helpers/variables";
 @import "components/navbar";
+@import "pages/all";
+
+
+
 
 
 // @mixin padding-sides($padding){
