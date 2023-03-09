@@ -6,4 +6,13 @@
 
 .defaultButton {
     @extend %defButton;
+    font-size: 17px;
 }
+
+.text {
+    @extend %defButton;
+    background-color: #6bbfca;
+    font-size: 16px;
+    padding: 16px 32px;
+    border-radius: 10px;
+  }
