@@ -34,8 +34,7 @@
       padding: 18px 24px; }
       .navbar nav a:hover {
         background-color: #333;
-        font-size: 18px;
-        box-shadow: #333333; }
+        font-size: 18px; }
 
 body {
   background-color: #D4D9DB;
