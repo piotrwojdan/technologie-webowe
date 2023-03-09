@@ -1,0 +1,9 @@
+%defButton {
+    background-color: #808080;
+    text-decoration: none;
+    color: white;
+}
+
+.defaultButton {
+    @extend %defButton;
+}
