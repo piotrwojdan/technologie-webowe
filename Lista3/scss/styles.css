@@ -80,8 +80,7 @@ body {
     left: 50%;
     text-align: center;
     transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%); 
-}
+    -ms-transform: translate(-50%, -50%); }
   .cont .image {
     opacity: 1;
     display: block;
