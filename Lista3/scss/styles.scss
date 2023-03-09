@@ -3,8 +3,9 @@
 
 @import "pages/main";
 @import "helpers/variables";
+@import "helpers/mixins";
 @import "components/navbar";
 @import "pages/all";
 @import "components/buttons";
-@import "helpers/mixins";
+
 @import "components/media_scroller";

@@ -2,3 +2,7 @@
     transform: $property;
     -ms-transform: $property;
 }
+
+@mixin paddingChange($property1, $property2){
+    padding: $property1 $property2;
+}

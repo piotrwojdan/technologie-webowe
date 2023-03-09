@@ -24,7 +24,7 @@
         a {
             
             display: block;
-            padding: 18px 24px;
+            @include paddingChange(18px, 24px);
             
             &:hover {
                 background-color: #333;

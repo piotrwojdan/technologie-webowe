@@ -10,11 +10,10 @@
     img {
         border-radius: 10px;
     }
-}
+  }
 
-.cont {
+  .cont {
     position: relative;
-    width: 50%;
 
     .middle {
         transition: .5s ease;
@@ -22,27 +21,36 @@
         position: absolute;
         top: 50%;
         left: 50%;
+        transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
         text-align: center;
-        @include transform(translate(-50%, -50%));
-    }
     
-    .image {
-        opacity: 1;
-        display: block;
-        width: 100%;
-        height: auto;
-        transition: .5s ease;
-        backface-visibility: hidden;
-    }
+      }
 
-    &:hover .middle {
+      &:hover .middle {
         opacity: 1;
-    }
-    
-    &:hover .image {
+      }
+
+      &:hover .image {
         opacity: 0.3;
-    }
-}
+      }
+  }
+  
 
+   .image {
+    opacity: 1;
+    display: block;
+    width: 100%;
+    height: auto;
+    transition: .5s ease;
+    backface-visibility: hidden;
+  }
 
+  
 
+  
+
+  
+  
+
+  
