@@ -1,0 +1,4 @@
+@mixin transform($property) {
+    transform: $property;
+    -ms-transform: &$property;
+}

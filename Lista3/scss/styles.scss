@@ -1,26 +1,10 @@
 @import url('https://fonts.googleapis.com/css?family=Dosis&display=swap');
-// przciski zrobic do dziedziczenia
+
+
 @import "pages/main";
 @import "helpers/variables";
 @import "components/navbar";
 @import "pages/all";
 @import "components/buttons";
+@import "helpers/mixins";
 @import "components/media_scroller";
-
-
-
-
-
-// @mixin padding-sides($padding){
-//     padding-left: $padding;
-//     padding-right: $padding;
-// }
-
-// .logo {
-//     @include padding-sides(3rem);
-//     font-size: 30px;
-// }
-
-// .logo:hover {
-//     @include padding-sides(3rem);
-// }
