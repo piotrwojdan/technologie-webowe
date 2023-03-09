@@ -18,6 +18,10 @@
   font-size: 3rem;
 }
 
+#opis {
+  font-size: 20px;
+}
+
 .navbar {
   background-color: #808080;
 }
@@ -88,6 +92,7 @@ body {
 
 .cont {
   position: relative;
+  width: 25%;
 }
 .cont .middle {
   transition: 0.5s ease;
@@ -110,7 +115,7 @@ body {
   opacity: 1;
   display: block;
   width: 100%;
-  height: auto;
+  height: 300px;
   transition: 0.5s ease;
   -webkit-backface-visibility: hidden;
           backface-visibility: hidden;
