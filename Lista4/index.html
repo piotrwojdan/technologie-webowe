@@ -15,30 +15,24 @@
 
     <header>
 
-
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <div class="container">
-                <a class="navbar-brand mr-auto" href="#">Vienna</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" datatarget="#basicExampleNav"
-                    aria-controls="basicExampleNav" aria-expanded="false" arialabel="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">Vienna</a>
+                <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
+                    data-mdb-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 448 512"><!--! Font Awesome Pro 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                        <path
+                            d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z" />
+                    </svg>
                 </button>
-                <div class="ml-auto">
-                    <div class="collapse navbar-collapse" id="basicExampleNav">
-                        <ul class="navbar-nav ml-auto">
-                            <li class="nav-item active">
-                                <a class="nav-link " href="#">Culture
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link " href="#">History</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link " href="#">Attractions</a>
-                            </li>
-
-                        </ul>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        <a class="nav-link " href="#">Culture</a>
+                        <a class="nav-link " href="#">History</a>
+                        <a class="nav-link " href="#">Attractions</a>
                     </div>
                 </div>
             </div>
@@ -51,134 +45,195 @@
     <main>
         <div class="container">
 
-            <img src="https://cdn-blob.austria.info/cms-uploads-prod/default/0001/06/thumb_5291_default_header_big.jpeg"
-                class="mx-auto d-block img-fluid mt-3" />
-            </br>
+            <section id="text/photo-1/3">
+                <h1 class="mt-5" id="tytul">The capital of Austria</h1>
+                <div class="container-fluid">
+                    <div class="row mt-5">
+                        <div class="col-xl-3">
+                            <p id="opis">
+                                Vienna is the capital, largest city, and one of nine states of Austria. Vienna is
+                                Austria's
+                                most
+                                populous
+                                city and its primate city, with about two million inhabitants
+                                (2.9 million within the metropolitan area, nearly one third of the country's
+                                population),
+                                and its cultural, economic, and political center. It is the 5th-largest city proper by
+                                population in the
+                                European Union and the largest of all cities on the Danube river.
+                                Until the beginning of the 20th century, Vienna was the largest German-speaking city in
+                                the
+                                world, and
+                                before the splitting of the Austro-Hungarian Empire in World War I,
+                                the city had two million inhabitants.
+                            </p>
+                        </div>
+                        <div class="col-xl-9">
+                            <img src="https://cdn-blob.austria.info/cms-uploads-prod/default/0001/06/thumb_5291_default_header_big.jpeg"
+                                class="img-fluid rounded-6" />
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-            <h1 id="tytul">The capital of Austria</h1>
-            <p id="opis">
-                Vienna is the capital, largest city, and one of nine states of Austria. Vienna is Austria's most
-                populous
-                city and its primate city, with about two million inhabitants
-                (2.9 million within the metropolitan area, nearly one third of the country's population),
-                and its cultural, economic, and political center. It is the 5th-largest city proper by population in the
-                European Union and the largest of all cities on the Danube river.
-                Until the beginning of the 20th century, Vienna was the largest German-speaking city in the world, and
-                before the splitting of the Austro-Hungarian Empire in World War I,
-                the city had two million inhabitants.Today, it is the second-largest German-speaking city after Berlin.
-                Vienna is host to many major international organizations, including the United Nations, OPEC and the
-                OSCE.
-            </p>
-            <h1>Popular attractions</h2>
 
-                <div id="demo" class="carousel slide" data-ride="carousel">
-                    <ul class="carousel-indicators">
-                        <li data-target="#demo" data-slide-to="0" class="active"></li>
-                        <li data-target="#demo" data-slide-to="1"></li>
-                        <li data-target="#demo" data-slide-to="2"></li>
-                        <li data-target="#demo" data-slide-to="3"></li>
-                    </ul>
+            <section id="carousel-section">
+                <h1>Popular attractions and Culture events</h1>
+
+                <div id="carouselBasicExample" class="carousel slide w-100" data-ride="carousel"
+                    data-mdb-ride="carousel">
+                    <div class="carousel-indicators">
+                        <button type="button" data-mdb-target="#carouselBasicExample" data-mdb-slide-to="0"
+                            class="active" aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" data-mdb-target="#carouselBasicExample" data-mdb-slide-to="1"
+                            aria-label="Slide 2"></button>
+                        <button type="button" data-mdb-target="#carouselBasicExample" data-mdb-slide-to="2"
+                                aria-label="Slide 3"></button>
+                            <button type="button" data-mdb-target="#carouselBasicExample" data-mdb-slide-to="3"
+                                aria-label="Slide 4"></button>
+                    </div>
                     <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <div class="card">
-                                <div class="card-body">
+                        <div class="carousel-item active ">
+                            <div class="cards-wrapper">
+                                <div class="card d-none d-md-block">
+                                    <img src="https://media.timeout.com/images/105315973/380/285/image.jpg" alt=""
+                                        class="card-img-top">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Wiener Riesenrad</h5>
+                                        <p class="card-text">Lorem ipsum dolor, sit amet consectetur adipisicing
+                                            elit. Placeat expedita maiores laborum nesciunt? Corrupti, magnam itaque
+                                            doloribus voluptatibus ut quas tempora inventore expedita cum, ullam
+                                            doloremque officia. Quis nemo, accusantium maiores exercitationem atque
+                                            amet eligendi saepe incidunt omnis corporis odio, inventore qui harum
+                                            repudiandae odit nobis minima fuga deserunt tempore!</p>
+                                    </div>
+                                </div>
+                                <div class="card d-none d-md-block">
+                                    <img src="https://media.timeout.com/images/105315974/380/285/image.jpg" alt=""
+                                        class="card-img-top">
+                                    <div class="card-body">
+                                        <h5 class="card-title">The Hofburg Palace</h5>
+                                        <p class="card-text">Lorem ipsum dolor, sit amet consectetur adipisicing
+                                            elit. Placeat expedita maiores laborum nesciunt? Corrupti, magnam itaque
+                                            doloribus voluptatibus ut quas tempora inventore expedita cum, ullam
+                                            doloremque officia. Quis nemo, accusantium maiores exercitationem atque
+                                            amet eligendi saepe incidunt omnis corporis odio, inventore qui harum
+                                            repudiandae odit nobis minima fuga deserunt tempore!</p>
+                                    </div>
+                                </div>
 
-                                    <img src="https://cdn-blob.austria.info/cms-uploads-prod/default/0001/06/thumb_5291_default_header_big.jpeg" alt=""
-                                        class="image">
-                                    <div class="card-text">
-                                        Wiener Riesenrad
+                            </div>
+                        </div>
+                        <div class="carousel-item ">
+                            <div class="cards-wrapper">
+
+                                <div class="card d-none d-md-block">
+                                    <img src="https://media.timeout.com/images/105315961/380/285/image.jpg" alt=""
+                                        class="card-img-top">
+                                    <div class="card-body">
+                                        <h5 class="card-title">St. Stephen’s Cathedral</h5>
+                                        <p class="card-text">Lorem ipsum dolor, sit amet consectetur adipisicing
+                                            elit. Placeat expedita maiores laborum nesciunt? Corrupti, magnam itaque
+                                            doloribus voluptatibus ut quas tempora inventore expedita cum, ullam
+                                            doloremque officia. Quis nemo, accusantium maiores exercitationem atque
+                                            amet eligendi saepe incidunt omnis corporis odio, inventore qui harum
+                                            repudiandae odit nobis minima fuga deserunt tempore!</p>
+                                    </div>
+                                </div>
+                                <div class="card d-none d-md-block">
+                                    <img src="https://media.timeout.com/images/105315964/380/285/image.jpg" alt=""
+                                        class="card-img-top">
+                                    <div class="card-body">
+                                        <h5 class="card-title">The Sigmund Freud Museum</h5>
+                                        <p class="card-text">Lorem ipsum dolor, sit amet consectetur adipisicing
+                                            elit. Placeat expedita maiores laborum nesciunt? Corrupti, magnam itaque
+                                            doloribus voluptatibus ut quas tempora inventore expedita cum, ullam
+                                            doloremque officia. Quis nemo, accusantium maiores exercitationem atque
+                                            amet eligendi saepe incidunt omnis corporis odio, inventore qui harum
+                                            repudiandae odit nobis minima fuga deserunt tempore!</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item ">
+                            <div class="cards-wrapper">
+
+                                <div class="card d-none d-md-block">
+                                    <img src="https://wieden.wyjazdy.travel/data/pliki/Austria/Wieden/opera-teatr/1wiedenska-opera-narodowa-680x428.jpg"
+                                        alt="" class="card-img-top">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Vienna State Opera </h5>
+                                        <p class="card-text">Lorem ipsum dolor, sit amet consectetur adipisicing
+                                            elit. Placeat expedita maiores laborum nesciunt? Corrupti, magnam itaque
+                                            doloribus voluptatibus ut quas tempora inventore expedita cum, ullam
+                                            doloremque officia. Quis nemo, accusantium maiores exercitationem atque
+                                            amet eligendi saepe incidunt omnis corporis odio, inventore qui harum
+                                            repudiandae odit nobis minima fuga deserunt tempore!</p>
+                                    </div>
+                                </div>
+                                <div class="card d-none d-md-block">
+                                    <img src="https://www.srs.at/fileadmin/_processed_/1/0/csm__Quadrille_v_Oben_2___c__Rene_van_Bakel_edit_03_55eeaeaf32.jpg"
+                                        alt="" class="card-img-top">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Spanish Riding School</h5>
+                                        <p class="card-text">Lorem ipsum dolor, sit amet consectetur adipisicing
+                                            elit. Placeat expedita maiores laborum nesciunt? Corrupti, magnam itaque
+                                            doloribus voluptatibus ut quas tempora inventore expedita cum, ullam
+                                            doloremque officia. Quis nemo, accusantium maiores exercitationem atque
+                                            amet eligendi saepe incidunt omnis corporis odio, inventore qui harum
+                                            repudiandae odit nobis minima fuga deserunt tempore!</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item ">
+                            <div class="cards-wrapper">
+
+                                <div class="card d-none d-md-block">
+                                    <img src="https://media.timeout.com/images/105970778/380/285/image.jpg" alt=""
+                                        class="card-img-top">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Belvedere Palace</h5>
+                                        <p class="card-text">Lorem ipsum dolor, sit amet consectetur adipisicing
+                                            elit. Placeat expedita maiores laborum nesciunt? Corrupti, magnam itaque
+                                            doloribus voluptatibus ut quas tempora inventore expedita cum, ullam
+                                            doloremque officia. Quis nemo, accusantium maiores exercitationem atque
+                                            amet eligendi saepe incidunt omnis corporis odio, inventore qui harum
+                                            repudiandae odit nobis minima fuga deserunt tempore!</p>
+                                    </div>
+                                </div>
+                                <div class="card d-none d-md-block">
+                                    <img src="https://media.timeout.com/images/105315962/380/285/image.jpg" alt=""
+                                        class="card-img-top">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Supersense</h5>
+                                        <p class="card-text">Lorem ipsum dolor, sit amet consectetur adipisicing
+                                            elit. Placeat expedita maiores laborum nesciunt? Corrupti, magnam itaque
+                                            doloribus voluptatibus ut quas tempora inventore expedita cum, ullam
+                                            doloremque officia. Quis nemo, accusantium maiores exercitationem atque
+                                            amet eligendi saepe incidunt omnis corporis odio, inventore qui harum
+                                            repudiandae odit nobis minima fuga deserunt tempore!</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="carousel-item">
-                        <div class="card">
-                            <div class="card-body">
-                                <img src="https://media.timeout.com/images/105315974/380/285/image.jpg" alt=""
-                                    class="image">
-                                <div class="card-text">
-                                    The Hofburg Palace
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="card">
-                            <div class="card-body">
-                                <img src="https://media.timeout.com/images/105315961/380/285/image.jpg" alt=""
-                                    class="image">
-                                <div class="card-text">
-                                    St. Stephen’s Cathedral
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="card">
-                            <div class="card-body">
-                                <img src="https://media.timeout.com/images/105315964/380/285/image.jpg" alt=""
-                                    class="image">
-                                <div class="card-text">
-                                    The Sigmund Freud Museum
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <a class="carousel-control-prev" href="#demo" role="button" data-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Previous</span>
-                      </a>
-                      <a class="carousel-control-next" href="#demo" role="button" data-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Next</span>
-                      </a>
-                   
                 </div>
 
+                <button class="carousel-control-prev" type="button" data-mdb-target="#carouselBasicExample"
+                    data-mdb-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="false"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-mdb-target="#carouselBasicExample"
+                    data-mdb-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="false"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+
+            </section>
         </div>
 
-        <div class="spacer"></div>
-        </br>
-        <h1>Culture events</h2>
-            <div class="media-container">
-                <div class="cont">
-                    <img src="https://wieden.wyjazdy.travel/data/pliki/Austria/Wieden/opera-teatr/1wiedenska-opera-narodowa-680x428.jpg"
-                        alt="" class="image">
-                    <div class="middle">
-                        <div class="text"> Vienna State Opera </div>
-                    </div>
-                </div>
-                <div class="cont">
-                    <img src="https://www.srs.at/fileadmin/_processed_/1/0/csm__Quadrille_v_Oben_2___c__Rene_van_Bakel_edit_03_55eeaeaf32.jpg"
-                        alt="" class="image">
-                    <div class="middle">
-                        <div class="text">Spanish Riding School </div>
-                    </div>
-                </div>
-                <div class="cont">
-                    <img src="https://media.timeout.com/images/105970778/380/285/image.jpg" alt="" class="image">
-                    <div class="middle">
-                        <div class="text">Belvedere Palace </div>
-                    </div>
-                </div>
-                <div class="cont">
-                    <img src="https://media.timeout.com/images/105315962/380/285/image.jpg" alt="" class="image">
-                    <div class="middle">
-                        <div class="text">Supersense</div>
-                    </div>
-                </div>
-
-            </div>
-
-
-
-
-
-
-
-            </div>
     </main>
 
 
