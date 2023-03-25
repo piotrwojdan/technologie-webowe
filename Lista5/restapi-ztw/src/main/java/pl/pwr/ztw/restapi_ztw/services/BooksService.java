@@ -1,16 +1,21 @@
-package pl.pwr.ztw.restapi_ztw;
+package pl.pwr.ztw.restapi_ztw.services;
 
 import org.springframework.stereotype.Service;
+import pl.pwr.ztw.restapi_ztw.models.Book;
+import pl.pwr.ztw.restapi_ztw.models.NotFoundException;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 @Service
 public class BooksService implements IBooksService {
+
     private static List<Book> booksRepo = new ArrayList<>();
     static {
-        booksRepo.add(new Book(1,"Potop", "Henryk Sienkiewicz", 936));
-        booksRepo.add(new Book(2,"Wesele", "Stanisław Reymont", 150));
-        booksRepo.add(new Book(3,"Dziady", "Adam Mickiewicz", 292));
+        AuthorService authorService = new AuthorService();
+        booksRepo.add(new Book(1,"Potop", 936, authorService.getAuthor(1)));
+        booksRepo.add(new Book(2,"Wesele", 150, authorService.getAuthor(2)));
+        booksRepo.add(new Book(3,"Dziady", 292, authorService.getAuthor(3)));
     }
     @Override
     public Collection<Book> getBooks() {
@@ -25,6 +30,7 @@ public class BooksService implements IBooksService {
                 .orElse(null);
     }
 
+
     @Override
     public void updateBook(int id,  Book newBook) throws NotFoundException {
         Book to_be_updated = booksRepo.stream()
@@ -33,7 +39,6 @@ public class BooksService implements IBooksService {
                             .orElse(null);
 
         if (to_be_updated != null) {
-            to_be_updated.setAuthor(newBook.getAuthor());
             to_be_updated.setPages(newBook.getPages());
             to_be_updated.setTitle(newBook.getTitle());
         } else {
