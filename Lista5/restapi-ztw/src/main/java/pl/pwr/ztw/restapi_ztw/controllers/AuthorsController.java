@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.pwr.ztw.restapi_ztw.models.Author;
 import pl.pwr.ztw.restapi_ztw.models.NotFoundException;
+import pl.pwr.ztw.restapi_ztw.models.PermissionDeniedException;
 import pl.pwr.ztw.restapi_ztw.services.IAuthorService;
 
 @RestController
@@ -47,6 +48,8 @@ public class AuthorsController {
         try {
             return new ResponseEntity<>(authorService.deleteAuthor(id), HttpStatus.OK);
 
+        } catch (PermissionDeniedException e){
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Author still has books in this database!");
         } catch (NotFoundException e) {
             return ResponseEntity.notFound().build();
         }

@@ -16,6 +16,16 @@ public class Book {
         authors.add(author);
     }
 
+    public Book() {
+    }
+
+    public Book(int id, String title, int pages) {
+        this.id = id;
+        this.title = title;
+        this.pages = pages;
+        this.authors = new ArrayList<>();
+    }
+
     public int getId() { return id; }
     public String getTitle() { return title; }
     public void setTitle(String title) { this.title = title; }
@@ -25,5 +35,7 @@ public class Book {
     public Collection<Author> getAuthors() {
         return authors;
     }
+
+    public void addAuthor(Author author) { authors.add(author); }
 
 }

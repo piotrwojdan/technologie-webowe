@@ -1,5 +1,8 @@
 package pl.pwr.ztw.restapi_ztw.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -7,6 +10,7 @@ public class Author {
     private int id;
     private String name;
     private String lastName;
+    @JsonIgnore
     private Collection<Book> books;
 
     public Author(int id, String name, String lastName) {

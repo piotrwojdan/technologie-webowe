@@ -30,6 +30,10 @@ public class BooksService implements IBooksService {
                 .orElse(null);
     }
 
+    @Override
+    public void createBook(Book newBook) {
+        booksRepo.add(newBook);
+    }
 
     @Override
     public void updateBook(int id,  Book newBook) throws NotFoundException {
