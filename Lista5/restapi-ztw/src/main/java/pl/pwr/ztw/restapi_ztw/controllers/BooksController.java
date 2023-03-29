@@ -36,9 +36,7 @@ public class BooksController {
 
     @PostMapping(value = "/books")
     public HttpStatus createBook(@RequestBody ObjectNode json){
-        Book checkBook = booksService.getBook(json.get("id").asInt());
-        if (checkBook == null) {
-        Book newBook = new Book(-1, json.get("title").asText(), json.get("pages").asInt());
+        Book newBook = new Book(json.get("title").asText(), json.get("pages").asInt());
         if (json.get("authorID").isArray()) {
             Iterator<JsonNode> iterator = json.get("authorID").elements();
             while (iterator.hasNext()) {
@@ -53,10 +51,7 @@ public class BooksController {
         }
         booksService.createBook(newBook);
         return HttpStatus.CREATED;
-        } else {
-            updateBook(checkBook, json.get("id").asInt());
-            return HttpStatus.NOT_ACCEPTABLE;
-        }
+        
     }
 
     @PutMapping(value = "/books/{id}")

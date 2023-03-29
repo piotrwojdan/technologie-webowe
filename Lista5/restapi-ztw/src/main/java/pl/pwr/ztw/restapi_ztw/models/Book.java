@@ -16,7 +16,14 @@ public class Book {
         authors.add(author);
     }
 
-    public Book() {
+    public Book(String title, int pages) {
+        this.title = title;
+        this.pages = pages;
+        this.authors = new ArrayList<>();
+    }
+
+    public Book(){
+
     }
 
     public Book(int id, String title, int pages) {

@@ -27,6 +27,10 @@ public class Author {
         books = list;
     }
 
+    public Author(){
+        
+    }
+
     public int getId() {
         return id;
     }

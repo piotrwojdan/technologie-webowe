@@ -7,15 +7,15 @@ import pl.pwr.ztw.restapi_ztw.models.NotFoundException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import pl.pwr.ztw.restapi_ztw.models.Author;
 @Service
 public class BooksService implements IBooksService {
 
     private static List<Book> booksRepo = new ArrayList<>();
     static {
-        AuthorService authorService = new AuthorService();
-        booksRepo.add(new Book(1,"Potop", 936, authorService.getAuthor(1)));
-        booksRepo.add(new Book(2,"Wesele", 150, authorService.getAuthor(2)));
-        booksRepo.add(new Book(3,"Dziady", 292, authorService.getAuthor(3)));
+        booksRepo.add(new Book(1,"Potop", 936, new Author(1,"Henryk", "Sienkiewicz")));
+        booksRepo.add(new Book(2,"Wesele", 150, new Author(2,"Stanisław", "Reymont")));
+        booksRepo.add(new Book(3,"Dziady", 292, new Author(3,"Adam", "Mickiewicz")));
     }
     @Override
     public Collection<Book> getBooks() {
