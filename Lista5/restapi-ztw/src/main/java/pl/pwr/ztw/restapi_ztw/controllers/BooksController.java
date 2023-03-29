@@ -36,7 +36,9 @@ public class BooksController {
 
     @PostMapping(value = "/books")
     public HttpStatus createBook(@RequestBody ObjectNode json){
-        Book newBook = new Book(json.get("id").asInt(), json.get("title").asText(), json.get("pages").asInt());
+        Book checkBook = booksService.getBook(json.get("id").asInt());
+        if (checkBook == null) {
+        Book newBook = new Book(-1, json.get("title").asText(), json.get("pages").asInt());
         if (json.get("authorID").isArray()) {
             Iterator<JsonNode> iterator = json.get("authorID").elements();
             while (iterator.hasNext()) {
@@ -50,19 +52,22 @@ public class BooksController {
             newBook.addAuthor(author);
         }
         booksService.createBook(newBook);
-
-
         return HttpStatus.CREATED;
+        } else {
+            updateBook(checkBook, json.get("id").asInt());
+            return HttpStatus.NOT_ACCEPTABLE;
+        }
     }
 
     @PutMapping(value = "/books/{id}")
-    public HttpStatus updateBook(@RequestBody Book newBook, @PathVariable("id") int id){
+    public ResponseEntity<Object> updateBook(@RequestBody Book newBook, @PathVariable("id") int id){
         try {
             booksService.updateBook(id, newBook);
-            return HttpStatus.OK;
+            return new ResponseEntity<>(newBook, HttpStatus.OK);
         } catch (NotFoundException e) {
-            return HttpStatus.NOT_FOUND;
+            return new ResponseEntity<>("Invalid data", HttpStatus.NOT_FOUND);
         }
+        
     }
 
     @DeleteMapping(value = "/books/{id}")

@@ -38,8 +38,14 @@ public class AuthorService implements IAuthorService{
     }
 
     @Override
-    public void createAuthor(Author newAuthor) {
-        authorsRepo.add(newAuthor);
+    public void createAuthor(Author newAuthor) throws NotFoundException {
+        for (Author a: authorsRepo){
+            if (a.getName().equals(newAuthor.getName()) && a.getLastName().equals(newAuthor.getLastName())){
+                throw new NotFoundException("taki autor już istnieje");
+            }
+        }
+        Author newAuthor2 = new Author(authorsRepo.size() + 1, newAuthor.getName(), newAuthor.getLastName(), newAuthor.getBooks());
+        authorsRepo.add(newAuthor2);
     }
 
     @Override

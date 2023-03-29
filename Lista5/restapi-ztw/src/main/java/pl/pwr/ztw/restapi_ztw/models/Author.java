@@ -20,6 +20,13 @@ public class Author {
         books = new ArrayList<>();
     }
 
+    public Author(int id, String name, String lastName, Collection<Book> list) {
+        this.id = id;
+        this.name = name;
+        this.lastName = lastName;
+        books = list;
+    }
+
     public int getId() {
         return id;
     }
@@ -42,6 +49,10 @@ public class Author {
 
     public Collection<Book> getBooks() {
         return books;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void addBook(Book book){

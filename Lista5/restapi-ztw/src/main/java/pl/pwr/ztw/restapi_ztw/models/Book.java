@@ -36,6 +36,10 @@ public class Book {
         return authors;
     }
 
+    public void setId(int id){
+        this.id = id;
+    }
+
     public void addAuthor(Author author) { authors.add(author); }
 
 }

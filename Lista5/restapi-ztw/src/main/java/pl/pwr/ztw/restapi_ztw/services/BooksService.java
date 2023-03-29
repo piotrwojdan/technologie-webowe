@@ -32,6 +32,7 @@ public class BooksService implements IBooksService {
 
     @Override
     public void createBook(Book newBook) {
+        newBook.setId(booksRepo.size() + 1);
         booksRepo.add(newBook);
     }
 

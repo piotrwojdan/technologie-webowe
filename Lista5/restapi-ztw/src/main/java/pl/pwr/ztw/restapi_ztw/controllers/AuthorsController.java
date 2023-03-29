@@ -29,7 +29,11 @@ public class AuthorsController {
 
     @PostMapping(value = "/authors")
     public HttpStatus createAuthor(@RequestBody Author newAuthor) {
+        try{
         authorService.createAuthor(newAuthor);
+        } catch (NotFoundException e){
+            return HttpStatus.NOT_ACCEPTABLE;
+        }
         return HttpStatus.OK;
     }
 
