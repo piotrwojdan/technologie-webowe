@@ -1,6 +1,8 @@
 package pl.pwr.ztw.restapi_ztw.services;
 
 import org.springframework.stereotype.Service;
+
+import pl.pwr.ztw.restapi_ztw.models.AlreadyExistsException;
 import pl.pwr.ztw.restapi_ztw.models.Author;
 import pl.pwr.ztw.restapi_ztw.models.Book;
 import pl.pwr.ztw.restapi_ztw.models.NotFoundException;
@@ -15,13 +17,12 @@ public class AuthorService implements IAuthorService{
 
     private static List<Author> authorsRepo = new ArrayList<>();
     static {
-        BooksService booksService = new BooksService();
         authorsRepo.add(new Author(1,"Henryk", "Sienkiewicz"));
-        authorsRepo.get(0).addBook(booksService.getBook(0));
+        authorsRepo.get(0).addBook(new Book(1,"Potop", 936));
         authorsRepo.add(new Author(2,"Stanisław", "Reymont"));
-        authorsRepo.get(1).addBook(booksService.getBook(1));
+        authorsRepo.get(1).addBook(new Book(2,"Wesele", 150));
         authorsRepo.add(new Author(3,"Adam", "Mickiewicz"));
-        authorsRepo.get(2).addBook(booksService.getBook(2));
+        authorsRepo.get(2).addBook(new Book(3,"Dziady", 292));
     }
 
     @Override
@@ -38,8 +39,14 @@ public class AuthorService implements IAuthorService{
     }
 
     @Override
-    public void createAuthor(Author newAuthor) {
-        authorsRepo.add(newAuthor);
+    public void createAuthor(Author newAuthor) throws AlreadyExistsException {
+        for (Author a: authorsRepo){
+            if (a.getName().equals(newAuthor.getName()) && a.getLastName().equals(newAuthor.getLastName())){
+                throw new AlreadyExistsException();
+            }
+        }
+        Author newAuthor2 = new Author(authorsRepo.size() + 1, newAuthor.getName(), newAuthor.getLastName(), newAuthor.getBooks());
+        authorsRepo.add(newAuthor2);
     }
 
     @Override

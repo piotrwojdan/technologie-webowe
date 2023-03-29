@@ -1,5 +1,6 @@
 package pl.pwr.ztw.restapi_ztw.services;
 
+import pl.pwr.ztw.restapi_ztw.models.AlreadyExistsException;
 import pl.pwr.ztw.restapi_ztw.models.Author;
 import pl.pwr.ztw.restapi_ztw.models.Book;
 import pl.pwr.ztw.restapi_ztw.models.NotFoundException;
@@ -11,7 +12,7 @@ public interface IAuthorService {
 
     public Collection<Author> getAuthors();
     public Author getAuthor(int id);
-    public void createAuthor(Author newAuthor);
+    public void createAuthor(Author newAuthor)  throws AlreadyExistsException;
     public void updateAuthor(int id, Author newAuthor) throws NotFoundException;
     public Author deleteAuthor(int id) throws NotFoundException, PermissionDeniedException;
     public void addBook(int id, Book book);

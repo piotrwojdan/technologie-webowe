@@ -3,6 +3,8 @@ package pl.pwr.ztw.restapi_ztw.controllers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import pl.pwr.ztw.restapi_ztw.models.AlreadyExistsException;
 import pl.pwr.ztw.restapi_ztw.models.Author;
 import pl.pwr.ztw.restapi_ztw.models.NotFoundException;
 import pl.pwr.ztw.restapi_ztw.models.PermissionDeniedException;
@@ -29,7 +31,11 @@ public class AuthorsController {
 
     @PostMapping(value = "/authors")
     public HttpStatus createAuthor(@RequestBody Author newAuthor) {
+        try{
         authorService.createAuthor(newAuthor);
+        } catch (AlreadyExistsException e){
+            return HttpStatus.NOT_ACCEPTABLE;
+        }
         return HttpStatus.OK;
     }
 
