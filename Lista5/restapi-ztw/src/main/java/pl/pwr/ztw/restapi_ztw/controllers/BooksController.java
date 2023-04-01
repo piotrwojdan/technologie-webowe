@@ -15,6 +15,7 @@ import pl.pwr.ztw.restapi_ztw.services.IBooksService;
 import java.util.Iterator;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:8081")
 public class BooksController {
     final IBooksService booksService;
     final IAuthorService authorService;

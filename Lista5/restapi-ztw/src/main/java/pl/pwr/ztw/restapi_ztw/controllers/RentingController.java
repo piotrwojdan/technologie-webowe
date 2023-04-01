@@ -10,6 +10,7 @@ import pl.pwr.ztw.restapi_ztw.services.IBooksService;
 import pl.pwr.ztw.restapi_ztw.services.IRentingService;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:8081")
 public class RentingController {
 
     private final IRentingService rentingService;

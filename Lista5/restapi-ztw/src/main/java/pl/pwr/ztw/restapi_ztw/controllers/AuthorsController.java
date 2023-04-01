@@ -11,6 +11,7 @@ import pl.pwr.ztw.restapi_ztw.models.PermissionDeniedException;
 import pl.pwr.ztw.restapi_ztw.services.IAuthorService;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:8081")
 public class AuthorsController {
 
     final IAuthorService authorService;

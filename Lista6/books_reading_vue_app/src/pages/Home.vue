@@ -1,13 +1,15 @@
-<template>
+<template >
     <div>
-        autorzy
+        Home
     </div>
 </template>
+
 <script>
 export default {
-    name: 'authors'
+    name: 'HomePage'
 }
 </script>
-<style lang="">
+
+<style>
     
 </style>
