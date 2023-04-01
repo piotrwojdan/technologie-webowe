@@ -7,6 +7,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import HomePage  from './pages/Home'
 import Books  from './components/Books'
 import Authors from './components/Authors'
+import EditBook from './components/EditBook'
 
 // 2. Define some routes
 // Each route should map to a component.
@@ -15,7 +16,8 @@ import Authors from './components/Authors'
 const routes = [
   { path: '/', component: HomePage },
   { path: '/books', component: Books },
-  { path: '/authors', component: Authors }
+  { path: '/authors', component: Authors },
+  { path: '/editBook/:id', component: EditBook, props:true}
 ]
 
 // 3. Create the router instance and pass the `routes` option

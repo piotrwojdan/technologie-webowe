@@ -1,3 +1,5 @@
+
+
 <template>
     <div class="container">
         <table class="table">
@@ -17,7 +19,7 @@
                         <p v-for="author in book.authors" :key="author.id">{{ author.name + ' ' + author.lastName}}</p>
                     </td>
                     <td>
-                        <button class="btn btn-primary" >Edit</button>
+                        <button @click="(event, id) => editBook(event, book.id)"  class="btn btn-primary">Edit</button>
                         <button class="btn btn-danger" @click="(event, id) => deleteBook(event, book.id)">Delete</button>
                     </td>
                 </tr>
@@ -39,6 +41,9 @@ export default {
     methods: {
         deleteBook(event, id) {
             axios.delete('http://127.0.0.1:8080/books/' + id) 
+        },
+        editBook(event, id) {
+            this.$router.push("/editBook/" + id)
         }
     },
     mounted() {
