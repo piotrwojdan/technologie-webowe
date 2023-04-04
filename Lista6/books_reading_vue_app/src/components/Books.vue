@@ -64,7 +64,7 @@ export default {
         deleteBook(event, id) {
             axios.delete('http://127.0.0.1:8080/books/' + id);
             alert("Ksiązka usunięta!");
-
+            this.$router.go();
         },
         editBook(event, id) {
             this.$router.push("/editBook/" + id);

@@ -35,7 +35,6 @@ export default {
     data() {
         return {
             book: {
-                id: '',
                 title: '',
                 pages: '',
                 authors: [],
@@ -56,13 +55,11 @@ export default {
     mounted() {
         axios.get('http://127.0.0.1:8080/books/' + this.id)
             .then(resp => {
-                this.book.id = resp.data.id;
                 this.book.title = resp.data.title;
                 this.book.pages = resp.data.pages;
                 this.book.authors = resp.data.authors;
             })
             .catch(error => console.error(error))
-        console.log(this.book);
     },
 }
 </script>
