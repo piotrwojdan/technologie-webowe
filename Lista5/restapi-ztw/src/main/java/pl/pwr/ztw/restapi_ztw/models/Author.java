@@ -28,7 +28,7 @@ public class Author {
     }
 
     public Author(){
-        
+        books = new ArrayList<>();
     }
 
     public int getId() {
