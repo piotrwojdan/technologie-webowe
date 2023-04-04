@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <table id="authorsTable" class="table table-sm">
+        <table id="authorsTable" class="table table-sm" :items="authors_source" :per-page="perPage" :current-page="currentPage"  small>
             <thead class="thead-dark">
                 <tr>
                     <th>Imię</th>
@@ -14,7 +14,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="author in authors_source" :key="author.id">
+                <tr v-for="(author, index) in paginatedData" :key="index">
                     <td>{{ author.name }}</td>
                     <td>{{ author.lastName }}</td>
                     <td>
@@ -24,6 +24,9 @@
                 </tr>
             </tbody>
         </table>
+
+        <b-pagination v-model="currentPage" :total-rows="rows" :per-page="perPage"
+                aria-controls="authorsTable"></b-pagination>
     </div>
 </template>
 
@@ -34,7 +37,7 @@ export default {
     name: 'authors',
     data() {
         return {
-            pageSize: 5,
+            perPage: 3,
             currentPage: 1,
             authors_source: []
         }
@@ -61,7 +64,17 @@ export default {
         axios.get('http://127.0.0.1:8080/authors')
             .then(resp => this.authors_source = resp.data)
             .catch(error => console.error(error))
-    }
+    }, 
+    computed: {
+      rows() {
+        return this.authors_source.length
+      },
+      paginatedData() {
+            const startIndex = (this.currentPage - 1) * this.perPage;
+            const endIndex = startIndex + this.perPage;
+            return this.authors_source.slice(startIndex, endIndex);
+        },
+    },
 }
 </script>
 <style>
