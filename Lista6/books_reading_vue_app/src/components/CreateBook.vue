@@ -1,5 +1,5 @@
 <template>
-    <div id="book-form">
+    <div>
         <div class="container d-flex justify-content-center">
             <div class="row">
                 <form @submit.prevent="handleSubmit">
@@ -16,7 +16,7 @@
                     <div class="row mb-4">
 
                         <label class="form-label">Authors</label>
-                        <label><p v-for="author in book.authors" :key="author.id">{{ author.name + ' ' + author.lastName}}</p></label>
+                        <select multiple class="form-select" v-model="book.authorID"><option v-for="author in this.authors" :key="author.id" :value="author.id">{{ author.name + ' ' + author.lastName}}</option></select>
                     </div>
                     <div class="d-flex justify-content-center">
                         <button class="btn bg-dark text-white mb-4 center">Send</button>
@@ -26,43 +26,37 @@
         </div>
     </div>
 </template>
-
 <script>
+import { throwStatement } from '@babel/types';
 import axios from 'axios'
 
 export default {
-    name: 'book-form',
     data() {
         return {
             book: {
-                id: '',
                 title: '',
                 pages: '',
-                authors: [],
+                authorID: [],
             },
+            authors: [],
         }
+    },
+    mounted() {
+        axios.get('http://127.0.0.1:8080/authors/')
+            .then(resp => this.authors = resp.data)
+            .catch(error => console.error(error))
     },
     methods: {
         handleSubmit() {
-            console.log('uruchomiono handleSubmit')
-            
-            axios.put('http://127.0.0.1:8080/books/' + this.id, this.book)
-            alert("Zapisano!");
+            axios.post('http://127.0.0.1:8080/books/', this.book);
+            alert("Dodano ksiazke!");
             this.$router.push("/books");
-        },
-    },
-
-    props: ["id"],
-    mounted() {
-        axios.get('http://127.0.0.1:8080/books/' + this.id)
-            .then(resp => {
-                this.book.id = resp.data.id;
-                this.book.title = resp.data.title;
-                this.book.pages = resp.data.pages;
-                this.book.authors = resp.data.authors;
-            })
-            .catch(error => console.error(error))
-        console.log(this.book);
-    },
+        }
+    }
+    
 }
 </script>
+
+<style>
+    
+</style>
