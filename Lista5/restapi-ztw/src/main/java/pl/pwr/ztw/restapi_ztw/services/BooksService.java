@@ -16,6 +16,8 @@ public class BooksService implements IBooksService {
         booksRepo.add(new Book(1,"Potop", 936, new Author(1,"Henryk", "Sienkiewicz")));
         booksRepo.add(new Book(2,"Wesele", 150, new Author(2,"Stanisław", "Reymont")));
         booksRepo.add(new Book(3,"Dziady", 292, new Author(3,"Adam", "Mickiewicz")));
+        booksRepo.add(new Book(4,"Chwile", 936, new Author(4,"Wisława", "Szymborksa")));
+        booksRepo.add(new Book(5,"Mistrz i Małgorzata", 150, new Author(2,"Stanisław", "Reymont")));
     }
     @Override
     public Collection<Book> getBooks() {
