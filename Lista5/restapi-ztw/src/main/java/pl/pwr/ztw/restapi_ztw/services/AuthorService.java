@@ -23,6 +23,8 @@ public class AuthorService implements IAuthorService{
         authorsRepo.get(1).addBook(new Book(2,"Wesele", 150));
         authorsRepo.add(new Author(3,"Adam", "Mickiewicz"));
         authorsRepo.get(2).addBook(new Book(3,"Dziady", 292));
+        authorsRepo.add(new Author(4,"Wisława", "Szymborska"));
+        authorsRepo.get(2).addBook(new Book(4,"Chwile", 292));
     }
 
     @Override
