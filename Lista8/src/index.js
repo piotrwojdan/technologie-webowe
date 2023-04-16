@@ -5,6 +5,8 @@ const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
 
+const fs = require("fs");
+
 class Model {
   constructor() {
     this.conversations = [];
@@ -54,6 +56,13 @@ io.on('connection', (socket) => {
     socket.broadcast.emit('user_leave', socket.username);
   });
 
+  socket.on("upload", (file, callback) => {
+    // save the content to the disk, for example
+    fs.writeFile("/uploads", file, (err) => {
+      callback({ message: err ? "failure" : "success" });
+    });
+  });
+
   // socket.on('old_message', async (data) => {
   //   const messageList = await model.conversations.findAll({
   //     where: {
@@ -65,14 +74,6 @@ io.on('connection', (socket) => {
   // });
 });
 
-const multer = require('multer');
-const upload = multer({ dest: 'uploads/' });
-
-app.post('/upload', upload.single('image'), (req, res) => {
-  const { filename } = req.file;
-  io.emit('image', { username: req.body.username, filename });
-  res.send('Image uploaded successfully!');
-});
 
 server.listen(3000, () => {
   console.log('listening on *:3000');
