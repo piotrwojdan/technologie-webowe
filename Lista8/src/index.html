@@ -132,24 +132,16 @@
                 const data = { username: "me", message: image.files[0], date: new Date().toLocaleString() };
                 addPhotoMessage(data, "me");
                 socket.emit('photo_message', image.files[0]);
-                image.files = [];
             }
         });
-
-        function upload(files) {
-            socket.emit("upload", files[0], (status) => {
-                console.log(status);
-            });
-        }
 
         socket.on("chat_message", function (data) {
             addChatMessage(data);
         });
 
-        socket.on("photo", function (data) {
-            console.log(data);
-            addPhotoMessage(data);
-            
+        socket.on("photo_message", function (data) {
+            const newData = {message: new Blob([data.message]), username: data.username, date: data.date};
+            addPhotoMessage(newData);
         });
 
         socket.on("user_join", function (data) {
@@ -159,14 +151,6 @@
 
         socket.on("user_leave", function (data) {
             addMessage(data + " has left the chat.", "status");
-        });
-
-        socket.on("old_message", function () {
-            console.log('----data', data);
-        });
-
-        socket.on("getList", function (data) {
-            console.log('----MessageList', data);
         });
 
         let typingTimer;
@@ -193,13 +177,8 @@
             typingIndicator.classList = [];
         });
 
-        
-
-
-
         addMessage("You have joined the chat as '" + username + "'.", "status");
         socket.emit("user_join", username);
-        socket.emit("old_message")
 
         function addMessage(message, author = "other") {
             const li = document.createElement("li");
