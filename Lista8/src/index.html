@@ -86,6 +86,11 @@
             text-align: center;
             font-size: small;
         }
+
+        img {
+            height: auto;
+            max-width: 100%;
+        }
     </style>
 </head>
 
@@ -94,11 +99,11 @@
     <div id="typing-indicator"></div>
     <form id="form" action="">
         <input id="input" autocomplete="off" />
-        <!-- <button><img src="../imgs/pngegg.png" width="20px" height="20px"/></button> -->
+        <!-- <button><img src="../imgs/pngegg.png" id="input-image" type="file"width="20px" height="20px" onchange="upload(this.files)"/></button> -->
         <button>Send</button>
     </form>
     <form id="image-form" action="">
-        <input id="input-image" type="file" accept="image/*" onchange="upload(this.files)"/><button>Send</button>
+        <input id="input-image" type="file" accept="image/*" /><button>Send</button>
     </form>
     <script src="/socket.io/socket.io.js"></script>
     <script>
@@ -108,6 +113,8 @@
         var messages = document.getElementById('messages');
         var form = document.getElementById('form');
         var input = document.getElementById('input');
+        var formImage = document.getElementById('image-form');
+        var image = document.getElementById('input-image');
 
         form.addEventListener('submit', function (e) {
             e.preventDefault();
@@ -119,8 +126,30 @@
             }
         });
 
+        formImage.addEventListener('submit', function (e) {
+            e.preventDefault();
+            if (image.files[0]) {
+                const data = { username: "me", message: image.files[0], date: new Date().toLocaleString() };
+                addPhotoMessage(data, "me");
+                socket.emit('photo_message', image.files[0]);
+                image.files = [];
+            }
+        });
+
+        function upload(files) {
+            socket.emit("upload", files[0], (status) => {
+                console.log(status);
+            });
+        }
+
         socket.on("chat_message", function (data) {
             addChatMessage(data);
+        });
+
+        socket.on("photo", function (data) {
+            console.log(data);
+            addPhotoMessage(data);
+            
         });
 
         socket.on("user_join", function (data) {
@@ -164,6 +193,8 @@
             typingIndicator.classList = [];
         });
 
+        
+
 
 
         addMessage("You have joined the chat as '" + username + "'.", "status");
@@ -193,11 +224,23 @@
             window.scrollTo(0, document.body.scrollHeight);
         }
 
+        function addPhotoMessage(data, author = "other") {
+            const li = document.createElement("li");
+            const div = document.createElement("div");
+            li.classList.add(author);
+            console.log("dsdfs")
+            const imageSource = URL.createObjectURL(data.message);
+            div.innerHTML = data.username + "<div class=\"chat-bubble " + author + "\">" + "<img src=\""+ imageSource+"\">" + "</div>" + data.date;
+            li.appendChild(div);
+            messages.appendChild(li);
+            window.scrollTo(0, document.body.scrollHeight);
+        }
+
         function upload(files) {
-        socket.emit("upload", files[0], (status) => {
-          console.log(status);
-        });
-      }
+            socket.emit("upload", files[0], (status) => {
+                console.log(status);
+            });
+        }
     </script>
 </body>
 
