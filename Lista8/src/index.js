@@ -32,6 +32,9 @@ io.on('connection', (socket) => {
     socket.broadcast.emit('user_join', data);
   });
 
+ 
+ 
+
   socket.on('typing', () => {
     socket.broadcast.emit('typing', socket.username);
   });
@@ -41,27 +44,41 @@ io.on('connection', (socket) => {
   });
 
   socket.on('chat_message', async (data) => {
-    const a = {
-      sender: data.senderId,
-      receiver: data.receiverId,
-      type: 'TEXT',
-      message: data.message,
-    };
+    // const a = {
+    //   sender: data.senderId,
+    //   receiver: data.receiverId,
+    //   type: 'TEXT',
+    //   message: data.message,
+    // };
     let msg = {message: data, username: socket.username, date: new Date().toLocaleString()}
-    model.conversations.push(a);
+    // model.conversations.push(a);
     socket.broadcast.emit('chat_message', msg);
+  });
+
+  socket.on('photo_message', async (data) => {
+    // const a = {
+    //   sender: data.senderId,
+    //   receiver: data.receiverId,
+    //   type: 'TEXT',
+    //   message: data.message,
+    // };
+    let msg = {username: socket.username, date: new Date().toLocaleString()}
+    // model.conversations.push(a);
+    socket.broadcast.emit('photo', msg, function (response){
+      if (response.error){
+        console.log("Error: " + response.error);
+      } else {
+        console.log("Success");
+      }
+    });
+    
   });
 
   socket.on('disconnect', (data) => {
     socket.broadcast.emit('user_leave', socket.username);
   });
 
-  socket.on("upload", (file, callback) => {
-    // save the content to the disk, for example
-    fs.writeFile("/uploads", file, (err) => {
-      callback({ message: err ? "failure" : "success" });
-    });
-  });
+  
 
   // socket.on('old_message', async (data) => {
   //   const messageList = await model.conversations.findAll({

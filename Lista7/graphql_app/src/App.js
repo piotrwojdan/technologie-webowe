@@ -42,10 +42,10 @@ var usersList = await getRestUsersList();
 var todosList = await getRestTodosList();
 
 function todoById(parent, args, context, info) {
-  return todosList.find((todo) => todo.id == args.id);
+  return todosList.find((t) => t.id == args.id);
 }
 function userById(parent, args, context, info) {
-  return usersList.find((user) => user.id == args.id);
+  return usersList.find((u) => u.id == args.id);
 }
 
 const resolvers = {
@@ -62,7 +62,7 @@ const resolvers = {
     },
     ToDoItem: {
       user: (parent, args, context, info) => {
-        return usersList.find((user_inner) => user_inner.id == parent.user_id);
+        return usersList.find((u) => u.id == parent.user_id);
       },
     }
 }

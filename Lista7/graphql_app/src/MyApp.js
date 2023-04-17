@@ -2,9 +2,12 @@ import { createSchema, createYoga } from "graphql-yoga";
 import { createServer } from "node:http";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
-import axios from "axios";
-import {mongoose} from 'mongoose';
-mongoose.connect("mongodb+srv://madzik:madzikPassword!@cluster0.gawc2fs.mongodb.net/?retryWrites=true&w=majority");
+import mongoose from 'mongoose';
+import dotenv from 'dotenv'
+dotenv.config();
+const uri = "mongodb+srv://madzik:madzikPassword!@cluster0.gawc2fs.mongodb.net/?retryWrites=true&w=majority";
+
+mongoose.connect(uri).then(() => console.log('DB connected!'));
 
 
 const User= mongoose.model("User",{
@@ -32,7 +35,6 @@ const resolvers = {
 },
     Mutation: {
         addUser: async (_, { name, login, email }) => {
-            console.log(mongoose.connection.readyState)
             const user = new User({name, login, email});
             await user.save();
             return user;
@@ -55,6 +57,7 @@ const yoga = createYoga({ schema });
 
 const server = createServer(yoga);
 
-server.listen(4000, () => {
-  console.info("Server is running on http://localhost:4000/graphql");
-});
+mongoose.connection.once("open", function(){
+  server.listen(4000, () => {
+    console.info("Server is running on http://localhost:4000/graphql");
+})});
