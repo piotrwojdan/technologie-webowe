@@ -33,6 +33,6 @@ alter table if exists seats add constraint FKg993pi7ucgy616icmddq8u335 foreign k
 alter table if exists seats add constraint FKcp43h11k99445lq681irnensp foreign key (seat_type_id) references seat_types;
 
 
-insert into cinemas(id, city, name) values (1, 'wroclaw', 'multikino');
-insert into cinemas(id, city, name) values (2, 'wroclaw', 'inne');
-insert into cinemas(id, city, name) values (3, 'wroclaw', 'jeszcze inne');
+-- insert into cinemas(id, city, name) values (1, 'wroclaw', 'multikino');
+-- insert into cinemas(id, city, name) values (2, 'wroclaw', 'inne');
+-- insert into cinemas(id, city, name) values (3, 'wroclaw', 'jeszcze inne');

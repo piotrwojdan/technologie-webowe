@@ -30,6 +30,7 @@ public class Cinema {
     }
 
     public Cinema(String name, String city) {
+
         this.name = name;
         this.city = city;
     }

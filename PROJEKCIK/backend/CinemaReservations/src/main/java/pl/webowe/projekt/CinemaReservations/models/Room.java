@@ -77,4 +77,12 @@ public class Room {
     public void setScreenY(int screenY) {
         this.screenY = screenY;
     }
+
+    public Cinema getIdCinema() {
+        return idCinema;
+    }
+
+    public void setIdCinema(Cinema idCinema) {
+        this.idCinema = idCinema;
+    }
 }
