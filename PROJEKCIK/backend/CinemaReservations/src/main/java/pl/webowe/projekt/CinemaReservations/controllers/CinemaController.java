@@ -10,7 +10,7 @@ import pl.webowe.projekt.CinemaReservations.services.CinemaService;
 
 import java.util.List;
 
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class CinemaController {
     private final CinemaService cinemaService;
