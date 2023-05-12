@@ -17,6 +17,20 @@ function Cinemas() {
             .then((resp) => resp.json())
             .then((resp) => setCinemas(resp))
             .catch((err) => console.log(err))
+
+        fetch("https://api-gate2.movieglu.com/filmsNowShowing/?n=10", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "api-version": "v200",
+                "Authorization": "Basic Tk9ORV8xMTZfWFg6ZHgyY084aG1MdDc0",
+                "client": "NONE_116",
+                "x-api-key": "luhf2lVbii9PMksiBTA5u2gQuErhXNd889Bu8bxO",
+                "device-datetime": "2023-05-112T19:46:30.296Z",
+                "territory": "XX",
+            },
+        }).then((resp) => resp.json())
+            .then((resp) => console.log(resp))
     }, [])
 
     return (

@@ -28,7 +28,7 @@ function MainNavigation() {
 
   return (
     <header className={classes.header}>
-      <div className={classes.logo}>Socjalny Kantor</div>
+      <div className={classes.logo}>KinoMax</div>
       {/* <nav>
         <ul>
           <li>
