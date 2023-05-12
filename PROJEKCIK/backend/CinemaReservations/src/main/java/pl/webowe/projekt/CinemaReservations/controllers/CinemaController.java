@@ -31,7 +31,7 @@ public class CinemaController {
 
     @PostMapping(value = "/cinemas")
     public ResponseEntity<Cinema> addCinema(@RequestBody ObjectNode json){
-        if (json.get("name").isNull() || json.get("city").isNull())
+        if (!json.has("name") || !json.has("city"))
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 
         return new ResponseEntity<>(cinemaService.addCinema(json.get("name").asText(), json.get("city").asText()), HttpStatus.CREATED);
@@ -40,7 +40,7 @@ public class CinemaController {
 
     @PutMapping(value = "/cinemas/{id}")
     public ResponseEntity<Cinema> updateCinema(@PathVariable Long id, @RequestBody ObjectNode json){
-        if (json.get("name").isNull() || json.get("city").isNull())
+        if (!json.has("name") || !json.has("city"))
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         try {
             Cinema cinema = cinemaService.updateCinema(id, json.get("name").asText(), json.get("city").asText());

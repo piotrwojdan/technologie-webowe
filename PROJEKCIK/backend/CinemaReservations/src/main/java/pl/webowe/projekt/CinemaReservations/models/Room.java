@@ -78,11 +78,15 @@ public class Room {
         this.screenY = screenY;
     }
 
-    public Cinema getIdCinema() {
-        return idCinema;
+    public long getIdCinema() {
+        return idCinema.getId();
     }
 
     public void setIdCinema(Cinema idCinema) {
         this.idCinema = idCinema;
+    }
+
+    public List<Screening> getScreenings() {
+        return screenings;
     }
 }

@@ -15,14 +15,13 @@ public class Screening {
     @Column(name = "time", nullable = false)
     private LocalDateTime time;
 
-    @JoinColumn(name = "movie_id", nullable = false)
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Movie movie;
+    @Column(name = "movie_id", nullable = false)
+    private long movie_id;
 
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "room_id")
-    private Room rooms;
+    private Room room;
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Reservation> reservations = new ArrayList<>();
@@ -31,6 +30,26 @@ public class Screening {
 
     }
 
+    public Screening(LocalDateTime time, long movie_id, Room room){
+        this.time = time;
+        this.movie_id = movie_id;
+        this.room = room;
 
+    }
 
+    public LocalDateTime getTime() {
+        return time;
+    }
+
+    public void setMovie_id(long movie_id) {
+        this.movie_id = movie_id;
+    }
+
+    public void setRoom(Room room) {
+        this.room = room;
+    }
+
+    public void setTime(LocalDateTime time) {
+        this.time = time;
+    }
 }

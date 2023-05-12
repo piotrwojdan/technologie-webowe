@@ -17,5 +17,5 @@ public class SeatService {
         this.roomRepo = roomRepo;
     }
 
-    // do przemyslenia glebokiego z winem i czyms mocniejszym
+    // do przemyslenia
 }

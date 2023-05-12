@@ -33,11 +33,11 @@ public class RoomController {
     public ResponseEntity<Room> addRoom(@RequestBody ObjectNode json){
         // screenSize, int screenX, int screenY, long cinemaID
         if (
-                json.get("name").isNull() ||
-                json.get("screenSize").isNull() ||
-                json.get("screenX").isNull() ||
-                json.get("screenY").isNull() ||
-                json.get("cinemaID").isNull()
+                !json.has("name") ||
+                !json.has("screenSize") ||
+                !json.has("screenX") ||
+                !json.has("screenY") ||
+                !json.has("cinemaID")
         )
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 
@@ -57,10 +57,10 @@ public class RoomController {
     @PutMapping(value = "/rooms/{id}")
     public ResponseEntity<Room> updateRoom(@PathVariable Long id, @RequestBody ObjectNode json){
         if (
-                json.get("name").isNull() ||
-                        json.get("screenSize").isNull() ||
-                        json.get("screenX").isNull() ||
-                        json.get("screenY").isNull()
+                !json.has("name") ||
+                !json.has("screenSize") ||
+                !json.has("screenX") ||
+                !json.has("screenY")
         )
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         try {

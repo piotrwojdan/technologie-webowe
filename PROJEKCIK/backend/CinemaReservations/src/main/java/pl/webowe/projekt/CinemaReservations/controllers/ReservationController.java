@@ -27,16 +27,16 @@ public class ReservationController {
     }
 
     @GetMapping(value = "/reservations/{id}")
-    public ResponseEntity<Reservation> getRoomById(@PathVariable("id") long id){
+    public ResponseEntity<Reservation> getReservationById(@PathVariable("id") long id){
         return new ResponseEntity<>(reservationService.getReservation(id), HttpStatus.OK);
     }
 
     @PostMapping(value = "/reservations")
     public ResponseEntity<Reservation> addReservation(@RequestBody ObjectNode json){
         if (
-                json.get("client_mail").isNull() ||
-                        json.get("seat_id").isNull() ||
-                        json.get("screening").isNull()
+                !json.has("client_mail") ||
+                !json.has("seat_id") ||
+                !json.has("screening")
 
         )
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
@@ -55,7 +55,7 @@ public class ReservationController {
 
     //tego chyba nie ma potrzeby robić
     @PutMapping(value = "/reservations/{id}")
-    public ResponseEntity<Room> updateRoom(@PathVariable Long id, @RequestBody ObjectNode json){
+    public ResponseEntity<Room> updateReservation(@PathVariable Long id, @RequestBody ObjectNode json){
             return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
     }
 
