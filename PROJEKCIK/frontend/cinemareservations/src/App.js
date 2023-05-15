@@ -2,13 +2,17 @@ import logo from './logo.svg';
 import './App.css';
 import { Routes, Route } from "react-router-dom";
 import Layout from './layout/Layout';
-import Cinemas from './components/Cinemas';
+import MainPage from './pages/MainPage';
 
 function App() {
+  console.log(new Date().toISOString())
   return (
     <Layout>
       <Routes>
-        <Route path="/" element={<Cinemas />} />
+        <Route path="/" element={<MainPage />} />
+        <Route path="/repertuar" element={<Repertuar />} />
+        <Route path="/soon" element={<MainPage />} />
+        <Route path="/admin" element={<MainPage />} />
 
       </Routes>
     </Layout>

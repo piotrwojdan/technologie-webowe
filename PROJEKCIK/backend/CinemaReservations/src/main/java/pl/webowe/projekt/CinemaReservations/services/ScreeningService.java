@@ -2,10 +2,9 @@ package pl.webowe.projekt.CinemaReservations.services;
 
 import org.springframework.stereotype.Service;
 import pl.webowe.projekt.CinemaReservations.exceptions.NotFoundException;
-import pl.webowe.projekt.CinemaReservations.models.Cinema;
-import pl.webowe.projekt.CinemaReservations.models.Room;
-import pl.webowe.projekt.CinemaReservations.models.Screening;
+import pl.webowe.projekt.CinemaReservations.models.*;
 import pl.webowe.projekt.CinemaReservations.repositories.CinemaRepository;
+import pl.webowe.projekt.CinemaReservations.repositories.ReservationRepository;
 import pl.webowe.projekt.CinemaReservations.repositories.RoomRepository;
 import pl.webowe.projekt.CinemaReservations.repositories.ScreeningRepository;
 
@@ -19,9 +18,12 @@ public class ScreeningService {
     private final ScreeningRepository screeningRepository;
     private final RoomRepository roomRepository;
 
-    public ScreeningService(ScreeningRepository screeningRepository, RoomRepository roomRepository) {
+    private final ReservationRepository reservationRepo;
+
+    public ScreeningService(ScreeningRepository screeningRepository, RoomRepository roomRepository, ReservationRepository reservationRepo) {
         this.screeningRepository = screeningRepository;
         this.roomRepository = roomRepository;
+        this.reservationRepo = reservationRepo;
     }
 
     public List<Screening> getAllScreenings() {
@@ -51,8 +53,16 @@ public class ScreeningService {
             Screening newScreening = new Screening();
             newScreening.setTime(time);
             newScreening.setMovie_id(movie_id);
-            newScreening.setRoom(roomRepository.findById(roomId).get());
+            Room room = roomRepository.findById(roomId).get();
+            newScreening.setRoom(room);
             screeningRepository.saveAndFlush(newScreening);
+            for (Seat seat: room.getSeats()) {
+                Reservation reservation = new Reservation();
+                reservation.setScreening(newScreening);
+                reservation.setSeat(seat);
+                reservationRepo.saveAndFlush(reservation);
+            }
+
             return newScreening;
         } else {
             throw new NotFoundException();

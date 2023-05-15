@@ -8,6 +8,8 @@ import pl.webowe.projekt.CinemaReservations.repositories.ReservationRepository;
 import pl.webowe.projekt.CinemaReservations.repositories.ScreeningRepository;
 import pl.webowe.projekt.CinemaReservations.repositories.SeatRepository;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,10 +35,11 @@ public class ReservationService {
     }
 
     //chyba nie do końca to jest potrzebne
-    public Reservation updateReservation(long id, String clientMail, long seat_id, long screening_id) throws NotFoundException {
+    public Reservation updateReservation(long id, String clientMail, long seat_id, long screening_id, LocalDateTime dateTime) throws NotFoundException {
         if (reservationRepository.existsById(id)) {
-            Reservation reservation = reservationRepository.findById(id).get();
+            Reservation reservation = reservationRepository.findBySeatIdAndScreeningId(seat_id, screening_id);
             reservation.setClient_mail(clientMail);
+            reservation.setReservation_date(dateTime);
             reservationRepository.saveAndFlush(reservation);
             return reservation;
         } else {
@@ -44,10 +47,28 @@ public class ReservationService {
         }
     }
 
+    public List<Reservation> updateReservations(String clientMail, List<Long> seat_id, long screening_id, LocalDateTime dateTime) throws NotFoundException {
 
-    public Reservation addReservation(String clientMail, long seat_id, long screening_id) throws NotFoundException {
+            List<Reservation> reservations = new ArrayList<>();
+            for(Long l: seat_id) {
+                Reservation reservation = reservationRepository.findBySeatIdAndScreeningId(l, screening_id);
+                if (reservation == null){
+                    throw new NotFoundException();
+                }
+                reservation.setClient_mail(clientMail);
+                reservation.setReservation_date(dateTime);
+                reservationRepository.saveAndFlush(reservation);
+                reservations.add(reservation);
+            }
+            return reservations;
+
+    }
+
+
+    public Reservation addReservation(String clientMail, long seat_id, long screening_id, LocalDateTime dateTime) throws NotFoundException {
         Reservation newReservation = new Reservation();
         newReservation.setClient_mail(clientMail);
+        newReservation.setReservation_date(dateTime);
         Optional<Seat> seat = seatRepository.findById(seat_id);
         Optional<Screening> screening = screeningRepository.findById(screening_id);
         if (seat.isPresent() && screening.isPresent()) {

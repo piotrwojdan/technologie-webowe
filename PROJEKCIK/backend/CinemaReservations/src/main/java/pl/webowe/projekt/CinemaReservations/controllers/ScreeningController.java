@@ -74,7 +74,5 @@ public class ScreeningController {
         } catch (NotFoundException e) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
-
-
     }
 }

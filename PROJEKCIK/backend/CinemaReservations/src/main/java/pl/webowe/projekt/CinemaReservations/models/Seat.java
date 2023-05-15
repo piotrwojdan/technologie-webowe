@@ -12,6 +12,8 @@ public class Seat {
     private long id;
     @Column(name = "seat_row", nullable = false)
     private int row;
+    @Column(name = "seat_number", nullable = false)
+    private int number;
     @JoinColumn(name = "seat_type_id", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY)
     private SeatType seatType;
@@ -27,11 +29,12 @@ public class Seat {
     public Seat() {
     }
 
-    public Seat(long id, int row, SeatType seatType, Room room) {
+    public Seat(long id, int row, int number, SeatType seatType, Room room) {
         this.id = id;
         this.row = row;
         this.seatType = seatType;
         this.room = room;
+        this.number = number;
     }
 
     public long getId() {
@@ -44,6 +47,14 @@ public class Seat {
 
     public void setRow(int row) {
         this.row = row;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
     }
 
     public SeatType getSeatType() {
