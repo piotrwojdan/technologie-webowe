@@ -6,9 +6,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
-import pl.webowe.projekt.CinemaReservations.models.Reservation;
 import pl.webowe.projekt.CinemaReservations.services.SeatService;
-import viewModels.RoomSeat;
+import pl.webowe.projekt.CinemaReservations.viewModels.RoomSeat;
 
 import java.util.List;
 

@@ -1,51 +1,60 @@
-package pl.webowe.projekt.CinemaReservations.models;
+package pl.webowe.projekt.CinemaReservations.viewModels;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import jakarta.persistence.*;
+import pl.webowe.projekt.CinemaReservations.models.Reservation;
+import pl.webowe.projekt.CinemaReservations.models.Room;
+import pl.webowe.projekt.CinemaReservations.models.Seat;
+import pl.webowe.projekt.CinemaReservations.models.SeatType;
 import pl.webowe.projekt.CinemaReservations.serializers.SeatTypeSerializer;
 
 import java.util.List;
 
-@Entity
-@Table(name = "seats")
-public class Seat {
-    @Id
-    @GeneratedValue
+public class RoomSeat {
+
+    @JsonProperty
     private long id;
-    @Column(name = "seat_row", nullable = false)
+    @JsonProperty
     private int row;
-    @Column(name = "seat_number", nullable = false)
+    @JsonProperty
     private int number;
-
     @JsonSerialize(using = SeatTypeSerializer.class)
-    @JoinColumn(name = "seat_type_id", nullable = false)
-    @ManyToOne(fetch = FetchType.LAZY)
     private SeatType seatType;
-
     @JsonIgnore
-    @JoinColumn(name = "room_id")
-    @ManyToOne(fetch = FetchType.LAZY)
     private Room room;
-
     @JsonIgnore
-    @JoinColumn(name = "seat_id")
-    @OneToMany(cascade = CascadeType.ALL)
     private List<Reservation> reservations;
+    @JsonProperty
+    private boolean isTaken;
 
-    public Seat() {
+    public RoomSeat() {
     }
 
-    public Seat(long id, int row, int number, SeatType seatType, Room room) {
+    public RoomSeat(long id, int row, int number, SeatType seatType, Room room, boolean isTaken) {
         this.id = id;
         this.row = row;
         this.seatType = seatType;
         this.room = room;
         this.number = number;
+        this.isTaken = isTaken;
+    }
+
+    public RoomSeat(Seat seat, boolean isTaken) {
+        this.id = seat.getId();
+        this.row = seat.getRow();
+        this.seatType = seat.getSeatType();
+        this.room = seat.getRoom();
+        this.number = seat.getNumber();
+        this.isTaken = isTaken;
     }
 
     public long getId() {
         return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public int getRow() {

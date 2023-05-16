@@ -1,5 +1,6 @@
 package pl.webowe.projekt.CinemaReservations.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ public class SeatType {
     @Column(name = "price", nullable = false)
     private double price;
 
+    @JsonIgnore
     @OneToMany()
     @JoinColumn(name = "seat_type_id")
     private List<Seat> seats = new ArrayList<>();

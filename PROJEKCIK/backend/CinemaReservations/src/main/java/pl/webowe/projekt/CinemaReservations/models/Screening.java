@@ -23,6 +23,7 @@ public class Screening {
     @JoinColumn(name = "room_id")
     private Room room;
 
+    @JoinColumn(name = "reservation_id")
     @OneToMany(cascade = CascadeType.ALL)
     private List<Reservation> reservations = new ArrayList<>();
 
@@ -52,4 +53,18 @@ public class Screening {
     public void setTime(LocalDateTime time) {
         this.time = time;
     }
+
+    public long getMovie_id() {
+        return movie_id;
+    }
+
+    public Room getRoom() {
+        return room;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+
 }

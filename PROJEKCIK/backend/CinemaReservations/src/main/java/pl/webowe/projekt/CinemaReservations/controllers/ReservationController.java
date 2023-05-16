@@ -80,12 +80,14 @@ public class ReservationController {
                 List<Long> seats_ids = objectMapper.convertValue(jsonNode, new TypeReference<>() {
                 });
 
-                return new ResponseEntity<>(reservationService.updateReservations(
+                List<Reservation> list = reservationService.updateReservations(
                         json.get("client_mail").asText(),
                         seats_ids,
                         json.get("screening").asInt(),
-                        LocalDateTime.parse(json.get("reservation_date").asText())),
+                        LocalDateTime.parse(json.get("reservation_date").asText()));
+                ResponseEntity<List<Reservation>> response = new ResponseEntity<>(list,
                         HttpStatus.CREATED);
+                return response;
 
         } catch (NotFoundException e) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
