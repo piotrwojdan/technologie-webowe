@@ -1,10 +1,10 @@
 import React from "react";
+import Reservation from "./Reservation";
 
 function MainPage() {
     return (
         <>
-            //karuzela z filmami nadchodzacymi
-            //lista teraz granych filmow 
+            <Reservation id={1}></Reservation>
 
         </>
     )

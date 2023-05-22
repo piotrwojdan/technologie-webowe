@@ -107,4 +107,20 @@ public class Room {
     public void setSeats(List<Seat> seats) {
         this.seats = seats;
     }
+
+    public int getRowsNumber() {
+        return rowsNumber;
+    }
+
+    public void setRowsNumber(int rowsNumber) {
+        this.rowsNumber = rowsNumber;
+    }
+
+    public int getSeatsNumber() {
+        return seatsNumber;
+    }
+
+    public void setSeatsNumber(int seatsNumber) {
+        this.seatsNumber = seatsNumber;
+    }
 }
