@@ -4,8 +4,12 @@ import React from 'react';
 
 
 function Layout(props){
+
+  function HandleSelect(cinemaId){
+    props.changeCinema(cinemaId);
+  }
   return (<div>
-    <MainNavigation/>
+    <MainNavigation cinemas={props.cinemas} changeCinema={HandleSelect}/>
     <main className={classes.main}>{props.children}</main>
   </div>
   );
