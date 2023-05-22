@@ -1,10 +1,10 @@
-import { Link } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import classes from './MainNavigation.module.css'
-import React from 'react'
+import React, { useRef } from 'react'
 import { useEffect, useState } from "react"
 import axios from 'axios'
 
-function MainNavigation() {
+function MainNavigation(props) {
 
   // const logoutUser = async () => {
   //   const resp = await httpClient.post('http://localhost:5002/logout')
@@ -25,39 +25,43 @@ function MainNavigation() {
   //     }
   //   })();
   // });
+  const location = useLocation();
+  const navigate = useNavigate();
+  const cinemaIdRef = useRef();
+  const [cinema, setCinema] = useState("/repertuar");
 
-    const [cinemas, setCinemas] = useState();
+  function HandleSelect(Event){
+    let id = cinemaIdRef.current.value;
+    props.changeCinema(id);
+    setCinema("/repertuar/" + id);
+    if(location.pathname.startsWith("/repertuar")){
+        navigate("/repertuar/" + id);
+    }
 
-    useEffect(() => {
-      axios.get('http://localhost:8080/cinemas').then(res => {
-        const c = res.data;
-        console.log(c);
-        setCinemas(c);
-      }).catch(
-        console.log("cos nie tak")
-      );
-    }, [])
+  }
 
+  
+    
   return (
     <header className={classes.header}>
       <div className={classes.logo}><Link to='/'>KinoMax</Link></div>
       <nav>
         <ul>
           <li>
-            <Link to='/repertuar'>Repertuar</Link>
+            <Link to={cinema}>Repertuar</Link>
           </li>
           <li>
             <Link to="/soon">Zapowiedzi</Link>
           </li>
           <li>
-            {cinemas && 
-              <ul>
-                  {cinemas.map(c => {
-                    <li key={c.id} style="color: black">
+            {props.cinemas && 
+              <select className='form-select' onChange={HandleSelect} ref={cinemaIdRef}>
+                  {props.cinemas.map(c => {
+                    return <option key={c.id} value={c.id}>
                       {c.name + ' - ' + c.city}
-                    </li>
+                    </option>
                   })}
-              </ul>
+              </select>
             }
           </li>
         </ul>
