@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import classes from './MainNavigation.module.css'
 import React from 'react'
 import { useEffect, useState } from "react"
-
+import axios from 'axios'
 
 function MainNavigation() {
 
@@ -26,48 +26,42 @@ function MainNavigation() {
   //   })();
   // });
 
+    const [cinemas, setCinemas] = useState();
+
+    useEffect(() => {
+      axios.get('http://localhost:8080/cinemas').then(res => {
+        const c = res.data;
+        console.log(c);
+        setCinemas(c);
+      }).catch(
+        console.log("cos nie tak")
+      );
+    }, [])
+
   return (
     <header className={classes.header}>
-      <div className={classes.logo}>KinoMax</div>
-      {/* <nav>
+      <div className={classes.logo}><Link to='/'>KinoMax</Link></div>
+      <nav>
         <ul>
           <li>
-            <Link to='/'>Posty</Link>
+            <Link to='/repertuar'>Repertuar</Link>
           </li>
-          {isLogged &&
-            <>
-              <li>
-                <Link to='/dodajpost'>Dodaj post</Link>
-              </li>
-              <li>
-                <Link to="/exchange">Wymiana walut</Link>
-              </li>
-            </>
-          }
           <li>
-            <Link to="/about">O nas</Link>
+            <Link to="/soon">Zapowiedzi</Link>
           </li>
-          {isLogged &&
-            <li>
-              <Link to="/konto">Konto</Link>
-            </li>
-          }
-          {!isLogged &&
-            <li>
-              <Link to="/login">Zaloguj się</Link>
-            </li>
-          }
-          {!isLogged &&
-            <li>
-              <Link to="/register">Rejestracja</Link>
-            </li>
-          }
-          {isLogged &&
-            <li>
-              <button className={classes.baton} onClick={logoutUser}>Wyloguj</button>
-            </li>}
+          <li>
+            {cinemas && 
+              <ul>
+                  {cinemas.map(c => {
+                    <li key={c.id} style="color: black">
+                      {c.name + ' - ' + c.city}
+                    </li>
+                  })}
+              </ul>
+            }
+          </li>
         </ul>
-      </nav> */}
+      </nav>
     </header>
   );
 }
