@@ -24,6 +24,15 @@ public class RoomController {
         return new ResponseEntity<>(roomService.getAllRooms(), HttpStatus.OK);
     }
 
+    @GetMapping(value = "/rooms/cinema/{id}")
+    public ResponseEntity<List<Room>> geRoomsInCinema(@PathVariable("id") long cinemaId) {
+        try {
+        return new ResponseEntity<>(roomService.getRoomsInCinema(cinemaId), HttpStatus.OK);
+        } catch (NotFoundException e){
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+    }
+
     @GetMapping(value = "/rooms/{id}")
     public ResponseEntity<Room> getRoomById(@PathVariable("id") long id){
         return new ResponseEntity<>(roomService.getRoom(id), HttpStatus.OK);

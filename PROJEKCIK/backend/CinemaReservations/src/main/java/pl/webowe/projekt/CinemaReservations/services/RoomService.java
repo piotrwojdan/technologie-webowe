@@ -28,6 +28,12 @@ public class RoomService {
         return roomRepo.findById(id).get();
     }
 
+    public List<Room> getRoomsInCinema(long cinemaId) throws NotFoundException {
+        if (!cinemaRepo.existsById(cinemaId))
+            throw new NotFoundException();
+        return roomRepo.findByIdCinema(cinemaId);
+    }
+
     public Room updateRoom(long id, String name, int screenSize, int screenX, int screenY) throws NotFoundException {
         if (roomRepo.existsById(id)) {
             Room room = roomRepo.findById(id).get();
