@@ -8,6 +8,8 @@ import MainPage from './pages/MainPage';
 import Repertuar from './pages/Repertuar';
 import AdminPanel from './pages/AdminPanel';
 import LoginPage from './pages/LoginPage';
+import AddScreening from './pages/AddScreening';
+import Reservation from './pages/Reservation';
 
 function App() {
   const [cinemas, setCinemas] = useState([]);
@@ -36,6 +38,8 @@ function App() {
         <Route path="/soon" element={<MainPage />} />
         <Route path="/admin" element={<AdminPanel />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/addscreening" element={<AddScreening />} />
+        <Route path="/reservation" element={<Reservation />} />
       </Routes>
     </Layout>
   );

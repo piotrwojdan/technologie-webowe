@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import LargeCard from "../UI/LargeCard";
+import {useNavigate} from "react-router-dom"
 
 function AdminPanel() {
-
+    const navigate = useNavigate()
     const [movies, setMovies] = useState([]);
 
     useEffect(() => {
@@ -25,6 +26,10 @@ function AdminPanel() {
             .catch(((error) => console.error(error)))
     }, [])
 
+    function handleClick(movie) {
+        navigate("/addscreening", {state: movie})
+    }
+
     return (
         <>
             <ul>
@@ -44,6 +49,7 @@ function AdminPanel() {
                                         <p>
                                             {m.synopsis_long}
                                         </p>
+                                        <button onClick={() => handleClick(m)} className="btn">Dodaj Seans</button>
                                     </div>
 
                                     
