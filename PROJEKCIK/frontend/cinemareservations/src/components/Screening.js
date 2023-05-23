@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import LargeCard from "../UI/LargeCard";
+import classes from './Screening.module.css'
+import Reservation from "../pages/Reservation";
 
 function Screening(props) {
     const [movie, setMovie] = useState();
@@ -8,7 +10,7 @@ function Screening(props) {
 
 
     useEffect(() => {
-        fetch("https://api-gate2.movieglu.com/filmDetails/?film_id=" + props.screening.movie_id, {
+        fetch("https://api-gate2.movieglu.com/filmDetails/?film_id=" + props.screening[0].movie_id, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -52,14 +54,18 @@ function Screening(props) {
     }
 
 
-    const SessionTime = ({ time }) => {
+    const SessionTime = ({ time, s }) => {
         const extractedTime = new Date(time);
+        console.log("My screening" + s);
+        const handleButtonClick = (Event) => {
+            
+        };
         
         return (
             
-            <div className="col">
+            <div className={classes.myButton}>
 
-                <button type="button" class="btn btn-outline-secondary">{extractedTime.getHours()}:{extractedTime.getMinutes()}</button>
+                <button type="button" class="btn btn-outline-secondary" onClick={handleButtonClick}>{extractedTime.getHours()}:{extractedTime.getMinutes()}</button>
 
             </div>
         );
@@ -80,8 +86,12 @@ function Screening(props) {
                         </h1>
                         <p> {movie.duration_mins} min</p>
                         <Description fullText={movie.synopsis_long}></Description>
-
-                        <SessionTime time={props.screening.time}></SessionTime>
+                        <div className={classes.container}>
+                        {props.screening.map(s => {
+                            return <SessionTime s={s} time={s.time}></SessionTime>
+                        })}
+                        </div>
+                        
                     </div>
 
                 </div>
