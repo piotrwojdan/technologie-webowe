@@ -4,7 +4,7 @@ import Reservation from "./Reservation";
 function MainPage() {
     return (
         <>
-            <Reservation id={1}></Reservation>
+            
 
         </>
     )
