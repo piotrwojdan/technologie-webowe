@@ -1,11 +1,14 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import LargeCard from "../UI/LargeCard";
 
 function Screening(props) {
     const [movie, setMovie] = useState();
+    const [image, setImage] = useState();
+
+
 
     useEffect(() => {
-        fetch("https://api-gate2.movieglu.com/filmDetails/?film_id=" + props.movieId, {
+        fetch("https://api-gate2.movieglu.com/filmDetails/?film_id=" + props.screening.movie_id, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -17,14 +20,75 @@ function Screening(props) {
                 "territory": "XX",
             },
         }).then((resp) => resp.json())
-            .then((resp) => setMovie(resp.data))
+            .then((resp) => {
+                setMovie(resp)
+                setImage(resp.images.poster[1].medium.film_image)
+            })
             .catch(((error) => console.error(error)))
+
+
     }, [])
 
-    return<>
-        <LargeCard> {movie && movie.film_name} </LargeCard>
+    const Description = ({ fullText }) => {
+        const [showFullText, setShowFullText] = useState(false);
+
+
+        const toggleText = () => {
+            setShowFullText(!showFullText);
+        };
+        return (
+            <div>
+                {showFullText ? (
+                    <p>{fullText}</p>
+                ) : (
+                    <p>{fullText.slice(0, 200)}...</p>
+                )}<div style={{ float: 'right' }}>
+                <button style={{ textAlign: 'right'}} className="btn" onClick={toggleText}>
+                    {showFullText ? 'Czytaj mniej' : 'Czytaj więcej'}
+                </button>
+                </div>
+            </div>
+        );
+    }
+
+
+    const SessionTime = ({ time }) => {
+        const extractedTime = new Date(time);
+        
+        return (
+            
+            <div className="col">
+
+                <button type="button" class="btn btn-outline-secondary">{extractedTime.getHours()}:{extractedTime.getMinutes()}</button>
+
+            </div>
+        );
+    };
+    return <>
+        {image &&
+
+
+            <LargeCard>
+                <div className="row">
+                    <div className="col-3">
+                        <img src={image}></img>
+                    </div>
+
+                    <div className="col-9">
+                        <h1>
+                            {movie.film_name}
+                        </h1>
+                        <p> {movie.duration_mins} min</p>
+                        <Description fullText={movie.synopsis_long}></Description>
+
+                        <SessionTime time={props.screening.time}></SessionTime>
+                    </div>
+
+                </div>
+            </LargeCard>
+        }
     </>
 
 }
-
+//{movie && movie.film_name}
 export default Screening;
