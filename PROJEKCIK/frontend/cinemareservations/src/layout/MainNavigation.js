@@ -25,22 +25,6 @@ function MainNavigation(props) {
   //     }
   //   })();
   // });
-  const location = useLocation();
-  const navigate = useNavigate();
-  const cinemaIdRef = useRef();
-  const [cinema, setCinema] = useState("/repertuar");
-
-  function HandleSelect(Event){
-    let id = cinemaIdRef.current.value;
-    props.changeCinema(id);
-    setCinema("/repertuar/" + id);
-    if(location.pathname.startsWith("/repertuar")){
-        navigate("/repertuar/" + id);
-    }
-
-  }
-
-  
     
   return (
     <header className={classes.header}>
@@ -48,21 +32,10 @@ function MainNavigation(props) {
       <nav>
         <ul>
           <li>
-            <Link to={cinema}>Repertuar</Link>
+            <Link to="/repertuar">Repertuar</Link>
           </li>
           <li>
             <Link to="/soon">Zapowiedzi</Link>
-          </li>
-          <li>
-            {props.cinemas && 
-              <select className='form-select' onChange={HandleSelect} ref={cinemaIdRef}>
-                  {props.cinemas.map(c => {
-                    return <option key={c.id} value={c.id}>
-                      {c.name + ' - ' + c.city}
-                    </option>
-                  })}
-              </select>
-            }
           </li>
           <li>
             <Link to="login">Zaloguj się</Link>

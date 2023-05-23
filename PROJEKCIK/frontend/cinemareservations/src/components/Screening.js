@@ -31,7 +31,7 @@ function Screening(props) {
             .catch(((error) => console.error(error)))
 
 
-    }, [])
+    }, [props.screening])
 
     const Description = ({ fullText }) => {
         const [showFullText, setShowFullText] = useState(false);

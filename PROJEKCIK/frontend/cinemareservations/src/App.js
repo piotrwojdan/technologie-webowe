@@ -12,29 +12,12 @@ import AddScreening from './pages/AddScreening';
 import Reservation from './pages/Reservation';
 
 function App() {
-  const [cinemas, setCinemas] = useState([]);
-  const [cinema, setCinema] = useState("/repertuar");
-
-  function HandleSelect(cinemaId){
-    setCinema("/repertuar/" + cinemaId);
-  }
-    useEffect(() => {
-      axios.get('http://localhost:8080/cinemas').then(res => {
-        const c = res.data;
-        console.log(c);
-        setCinemas(c);
-      }).catch(
-        console.log("cos nie tak")
-      );
-    }, [])
-
-    
 
   return (
-    <Layout cinemas={cinemas} changeCinema={HandleSelect}>
+    <Layout>
       <Routes>
         <Route path="/" element={<MainPage />} />
-        <Route path="/repertuar/:id"  element={<Repertuar />} />
+        <Route path="/repertuar"  element={<Repertuar />} />
         <Route path="/soon" element={<MainPage />} />
         <Route path="/admin" element={<AdminPanel />} />
         <Route path="/login" element={<LoginPage />} />
