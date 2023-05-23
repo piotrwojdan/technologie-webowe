@@ -7,6 +7,7 @@ import Layout from './layout/Layout';
 import MainPage from './pages/MainPage';
 import Repertuar from './pages/Repertuar';
 import AdminPanel from './pages/AdminPanel';
+import LoginPage from './pages/LoginPage';
 
 function App() {
   const [cinemas, setCinemas] = useState([]);
@@ -34,7 +35,7 @@ function App() {
         <Route path="/repertuar/:id"  element={<Repertuar />} />
         <Route path="/soon" element={<MainPage />} />
         <Route path="/admin" element={<AdminPanel />} />
-
+        <Route path="/login" element={<LoginPage />} />
       </Routes>
     </Layout>
   );
