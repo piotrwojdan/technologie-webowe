@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import RoomView from "../components/RoomView";
+import { useLocation } from "react-router-dom";
 
 function Reservation(props) {
-
+    const location = useLocation();
+    const screening = location.state;
     const [seatList, setSeatList] = useState();
 
     useEffect(() => {
-        fetch("http://127.0.0.1:8080/seats/" + props.id, {
+        fetch("http://127.0.0.1:8080/seats/" + screening.id, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",

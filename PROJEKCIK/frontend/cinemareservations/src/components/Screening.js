@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import LargeCard from "../UI/LargeCard";
 import classes from './Screening.module.css'
 import Reservation from "../pages/Reservation";
+import {useNavigate} from "react-router-dom"
 
 function Screening(props) {
     const [movie, setMovie] = useState();
     const [image, setImage] = useState();
+    const navigate = useNavigate()
 
 
 
@@ -56,16 +58,16 @@ function Screening(props) {
 
     const SessionTime = ({ time, s }) => {
         const extractedTime = new Date(time);
-        console.log("My screening" + s);
-        const handleButtonClick = (Event) => {
-            
+        console.log(s);
+        const handleButtonClick = (screening) => {
+            navigate("/reservation", {state: screening})
         };
         
         return (
             
             <div className={classes.myButton}>
 
-                <button type="button" class="btn btn-outline-secondary" onClick={handleButtonClick}>{extractedTime.getHours()}:{extractedTime.getMinutes()}</button>
+                <button type="button" class="btn btn-outline-secondary" onClick={() => handleButtonClick(s)}>{extractedTime.getHours()}:{extractedTime.getMinutes()}</button>
 
             </div>
         );
