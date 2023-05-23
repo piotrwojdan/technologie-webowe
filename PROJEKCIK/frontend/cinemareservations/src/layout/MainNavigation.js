@@ -44,7 +44,7 @@ function MainNavigation(props) {
     
   return (
     <header className={classes.header}>
-      <div className={classes.logo}><Link to='/'>KinoMax</Link></div>
+      <div className={classes.logo}><Link to='/'><h1>KinoMax</h1></Link></div>
       <nav>
         <ul>
           <li>
@@ -63,6 +63,9 @@ function MainNavigation(props) {
                   })}
               </select>
             }
+          </li>
+          <li>
+            <Link to="login">Zaloguj się</Link>
           </li>
         </ul>
       </nav>
