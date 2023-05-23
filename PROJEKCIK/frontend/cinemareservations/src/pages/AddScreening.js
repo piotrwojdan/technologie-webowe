@@ -9,8 +9,9 @@ function AddScreening() {
 
     const chosenRoom = useRef();
     const chosenCinema = useRef();
-    const [cinema, setCinema] = useState();
+    const chosenDateTime = useRef();
 
+    const [cinema, setCinema] = useState();
     const [cinemas, setCinemas] = useState([]);
     const [rooms, setRooms] = useState([]);
 
@@ -40,6 +41,14 @@ function AddScreening() {
     function handleSubmit(event) {
         event.preventDefault();
 
+        const screeningData = {
+            time: chosenDateTime.current.value,
+            movie_id: movie.film_id,
+            room_id: chosenRoom.current.value
+        }
+
+        axios.post('http://localhost:8080/screenings', screeningData)
+
     }
 
     function handleSelectCinema(event) {
@@ -61,10 +70,10 @@ function AddScreening() {
                     <form onSubmit={handleSubmit}>
                         <div class="container">
                             <label for="time" class="form-label">Wybierz godzinę seansu:</label>
-                            <input type="datetime-local" name="" id="time" class="form-control" placeholder="" />
+                            <input type="datetime-local" name="" id="time" class="form-control" placeholder="" ref={chosenDateTime} required/>
 
                             <label for="cinema" class="form-label">Wybierz kino:</label>
-                            <select className="form-select" onChange={handleSelectCinema} name="cinema" id="cinema" ref={chosenCinema}>
+                            <select className="form-select" onChange={handleSelectCinema} name="cinema" id="cinema" ref={chosenCinema} required>
                                 <option key={''} value={''}></option>
                                 {cinemas && cinemas.map(c => {
                                     return <option key={c.id} value={c.id}>{c.name + ' - ' + c.city}</option>
@@ -72,12 +81,14 @@ function AddScreening() {
                             </select>
 
                             <label for="room" class="form-label">Wybierz salę:</label>
-                            <select className="form-select" onChange={handleSelectCinema} name="room" id="room" ref={chosenRoom}>
+                            <select className="form-select" onChange={handleSelectCinema} name="room" id="room" ref={chosenRoom} required>
                                 <option key={''} value={''}></option>
                                 {rooms && rooms.map(c => {
                                     return <option key={c.id} value={c.id}>{c.name}</option>
                                 })}
                             </select>
+
+                            <button className="btn btn-primary">Dodaj</button>
                         </div>
 
                     </form>
