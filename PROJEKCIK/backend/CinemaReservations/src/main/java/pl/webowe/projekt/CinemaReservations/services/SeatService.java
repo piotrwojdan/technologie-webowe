@@ -8,6 +8,7 @@ import pl.webowe.projekt.CinemaReservations.repositories.SeatRepository;
 import pl.webowe.projekt.CinemaReservations.repositories.SeatTypeRepository;
 import pl.webowe.projekt.CinemaReservations.viewModels.RoomSeat;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class SeatService {
         List<Reservation> reservations = reservationRepo.findByScreeningId(sreening_id);
         List<RoomSeat> roomSeats = new ArrayList<>();
         for(Reservation r: reservations) {
-            RoomSeat roomSeat = new RoomSeat(r.getSeat(), r.getClient_mail() != null );
+            RoomSeat roomSeat = new RoomSeat(r.getSeat(), r.getClient_mail() != null || r.getReservation_date().isAfter(LocalDateTime.now()));
             roomSeats.add(roomSeat);
         }
         return roomSeats;
