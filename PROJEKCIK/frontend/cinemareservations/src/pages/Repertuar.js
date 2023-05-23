@@ -7,6 +7,8 @@ import Screening from "../components/Screening";
 function Repertuar() {
     const [screenings, setScreenings] = useState([]);
     const { id } = useParams();
+    
+
 
     useEffect(() => {
         console.log(id);
@@ -18,11 +20,14 @@ function Repertuar() {
         console.log("cos nie tak")
       );
     }, [])
+
     return (
-        <>
+        <><ul>
             {screenings && screenings.map(s => {
-                return <Screening movieId={s.movie_id}></Screening>
+
+                return <li key={s.id}><Screening screening={s}></Screening></li>
             })}
+            </ul>
         </>
     );
 }
