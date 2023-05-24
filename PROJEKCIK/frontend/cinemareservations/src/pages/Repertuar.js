@@ -20,7 +20,6 @@ function Repertuar() {
   useEffect(() => {
     axios.get('http://localhost:8080/cinemas').then(res => {
       const c = res.data;
-      console.log(c);
       setCinemas(c);
       setCinema(c[0].id)
     }).catch(
@@ -33,14 +32,13 @@ function Repertuar() {
   useEffect(() => {
     axios.get('http://localhost:8080/screenings/cinema/' + cinema).then(res => {
       const c = res.data;
-      console.log(c);
 
       const movies = c.map(t => t.movie_id).filter((val, idx, arr) => arr.indexOf(val) === idx)
-      console.log(movies)
+
       const actualScreenings = movies.map(movie => {
         return c.filter(t => t.movie_id === movie)
       })
-      console.log(actualScreenings)
+
       setScreenings(actualScreenings);
 
 

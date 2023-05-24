@@ -30,7 +30,9 @@ public class SeatService {
         List<Reservation> reservations = reservationRepo.findByScreeningId(sreening_id);
         List<RoomSeat> roomSeats = new ArrayList<>();
         for(Reservation r: reservations) {
-            RoomSeat roomSeat = new RoomSeat(r.getSeat(), r.getClient_mail() != null || r.getReservation_date().isAfter(LocalDateTime.now()));
+            RoomSeat roomSeat = new RoomSeat(
+                    r.getSeat(),
+                    r.getClient_mail() != null || (r.getReservation_date() != null && r.getReservation_date().isAfter(LocalDateTime.now())));
             roomSeats.add(roomSeat);
         }
         return roomSeats;

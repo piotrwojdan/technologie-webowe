@@ -18,7 +18,6 @@ function AddScreening() {
     useEffect(() => {
         axios.get('http://localhost:8080/cinemas').then(res => {
             const c = res.data;
-            console.log(c);
             setCinemas(c);
         }).catch(
             console.log("cos nie tak")
@@ -31,7 +30,6 @@ function AddScreening() {
         }
         axios.get('http://localhost:8080/rooms/cinema/' + cinema).then(res => {
             const c = res.data;
-            console.log(c);
             setRooms(c);
         }).catch(
             console.log("cos nie tak")

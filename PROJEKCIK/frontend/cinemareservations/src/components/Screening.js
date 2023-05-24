@@ -58,7 +58,6 @@ function Screening(props) {
 
     const SessionTime = ({ time, s }) => {
         const extractedTime = new Date(time);
-        console.log(s);
         const handleButtonClick = (screening) => {
             navigate("/reservation", {state: screening})
         };
@@ -67,7 +66,7 @@ function Screening(props) {
             
             <div className={classes.myButton}>
 
-                <button type="button" class="btn btn-outline-secondary" onClick={() => handleButtonClick(s)}>{extractedTime.getHours()}:{extractedTime.getMinutes()}</button>
+                <button type="button" className="btn btn-outline-secondary" onClick={() => handleButtonClick(s)}>{extractedTime.getHours()}:{extractedTime.getMinutes()}</button>
 
             </div>
         );

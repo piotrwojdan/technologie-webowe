@@ -20,7 +20,6 @@ function AdminPanel() {
             },
         }).then((resp) => resp.json())
             .then((resp) => {
-                console.log(resp)
                 setMovies(resp.films)
             })
             .catch(((error) => console.error(error)))

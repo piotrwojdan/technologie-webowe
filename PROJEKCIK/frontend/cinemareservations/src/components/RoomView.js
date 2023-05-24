@@ -45,8 +45,8 @@ function RoomView(props) {
             <div className={classes.screen} style={screenStyle}></div>
 
             {props.seats.map((seat, index) => {
-                const xPos = (seat.number - 1) * (seatWidth + spaceWidth) + 50;
-                const yPos = (seat.row - 1) * (seatHeight + spaceHeight) + 50;
+                const xPos = (seat.number - 1) * (seatWidth + spaceWidth) - 50;
+                const yPos = (seat.row - 1) * (seatHeight + spaceHeight) + 75;
                 let backColor;
                 if (seat.seatType.type === 'EMPTY') {
                     backColor = 'white';
@@ -75,12 +75,12 @@ function RoomView(props) {
             })}
 
             {rowsList.map(row => {
-                const yPos = row * (seatHeight + spaceHeight) + 50;
+                const yPos = row * (seatHeight + spaceHeight) + 75;
 
                 const rowStyle = {
                     position: 'absolute',
                     top: yPos + 'px',
-                    left: '0px',
+                    left: '-100px',
                     height: seatHeight + 4 + 'px',
                     fontSize: '18px'
                 }
