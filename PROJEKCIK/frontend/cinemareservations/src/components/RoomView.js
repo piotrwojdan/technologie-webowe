@@ -14,7 +14,7 @@ function RoomView(props) {
         height: '7px'
     };
 
-    const rowsNumber = 10;
+    const rowsNumber = props.screening.room.rowsNumber;
     const rowsList = Array.apply(null, { length: rowsNumber }).map((_, idx) => { return idx; });
 
     const [selectedSeats, setSelectedSeats] = useState([]);

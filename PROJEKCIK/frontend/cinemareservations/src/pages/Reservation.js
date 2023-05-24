@@ -12,6 +12,20 @@ function Reservation(props) {
     const seatHeight = 20;
 
     useEffect(() => {
+        fetch("http://127.0.0.1:8080/seattypes", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+            .then((resp) => resp.json())
+            .then((resp) => {
+                resp.push({ id: -1, type: 'TAKEN', price: 0 })
+                resp.push({ id: -2, type: 'CHOSEN', price: 0 })
+                setSeatTypes(resp);
+            })
+            .catch((err) => console.log(err))
+
         fetch("http://127.0.0.1:8080/seats/" + screening.id, {
             method: "GET",
             headers: {
@@ -20,15 +34,7 @@ function Reservation(props) {
         })
             .then((resp) => resp.json())
             .then((resp) => {
-                const s = resp.map(t => t.seatType.id).filter((val, idx, arr) => arr.indexOf(val) === idx)
-                const ss = s.map(t => {
-                    return resp.map(temp => temp.seatType).filter(val => val.id === t)
-                })
-                const sss = ss.map(arr => { return arr[0] })
-                sss.push({ id: -1, type: 'TAKEN', price: 0 })
-                sss.push({ id: -2, type: 'CHOSEN', price: 0 })
-                setSeatTypes(sss);
-                setSeatList(resp)
+                setSeatList(resp);
             })
             .catch((err) => console.log(err))
 
@@ -50,7 +56,7 @@ function Reservation(props) {
 
     return (
         <>
-            {seatList && <RoomView seats={seatList}></RoomView>}
+            {seatList && <RoomView seats={seatList} screening={screening}></RoomView>}
             <div className="d-flex flex-row-reverse pt-5">
                 <ul>
                     {seatTypes && seatTypes.map(s => {
