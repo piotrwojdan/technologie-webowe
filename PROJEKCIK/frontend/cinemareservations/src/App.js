@@ -10,6 +10,8 @@ import AdminPanel from './pages/AdminPanel';
 import LoginPage from './pages/LoginPage';
 import AddScreening from './pages/AddScreening';
 import Reservation from './pages/Reservation';
+import ComingSoon from './pages/ComingSoon';
+
 
 function App() {
 
@@ -18,7 +20,7 @@ function App() {
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/repertuar"  element={<Repertuar />} />
-        <Route path="/soon" element={<MainPage />} />
+        <Route path="/soon" element={<ComingSoon />} />
         <Route path="/admin" element={<AdminPanel />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/addscreening" element={<AddScreening />} />
