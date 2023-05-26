@@ -85,9 +85,11 @@ public class ReservationController {
                         seats_ids,
                         json.get("screening").asInt(),
                         LocalDateTime.parse(json.get("reservation_date").asText()));
-                ResponseEntity<List<Reservation>> response = new ResponseEntity<>(list,
-                        HttpStatus.CREATED);
-                return response;
+                if (list == null) {
+                    return new ResponseEntity<>(null, HttpStatus.CONFLICT);
+                }
+            return new ResponseEntity<>(list,
+                    HttpStatus.CREATED);
 
         } catch (NotFoundException e) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);

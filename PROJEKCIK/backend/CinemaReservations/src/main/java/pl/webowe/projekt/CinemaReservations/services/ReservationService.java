@@ -55,6 +55,10 @@ public class ReservationService {
                 if (reservation == null){
                     throw new NotFoundException();
                 }
+                if (reservation.getClient_mail() == null ||
+                        reservation.getReservation_date() != null ||
+                        (reservation.getReservation_date() != null && reservation.getReservation_date().isAfter(LocalDateTime.now())))
+                    return null;
                 reservation.setClient_mail(clientMail);
                 reservation.setReservation_date(dateTime);
                 reservationRepository.saveAndFlush(reservation);
