@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
-import Reservation from "./Reservation";
 import { Carousel } from 'react-bootstrap';
 import classes from './MainPage.module.css'
 import 'bootstrap/dist/css/bootstrap.css';
-import Repertuar from "./Repertuar";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import Screenings from "./Screenings";
 import axios from "axios";
 
 
@@ -15,6 +14,39 @@ function MainPage() {
     const [movies, setMovies] = useState([]);
     const [hoveredMovie, setHoveredMovie] = useState(null);
     const [selectedDate, setSelectedDate] = useState(null);
+    const [cinemas, setCinemas] = useState([]);
+    const [cinema, setCinema] = useState(0);
+    const chosenDate = useRef();
+    const [screenings, setScreenings] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+
+
+    const cinemaIdRef = useRef();
+
+    function HandleSelect() {
+        setCinema(cinemaIdRef.current.value);
+    }
+
+    const handleClick = (event) => {
+        setIsLoading(true);
+        const selectedCinemaId = event.target.value;
+        setCinema(selectedCinemaId)
+        console.log(chosenDate.current.value)
+
+
+
+
+    };
+
+    useEffect(() => {
+        axios.get('http://localhost:8080/cinemas').then(res => {
+            const c = res.data;
+            setCinemas(c);
+            setCinema(c[0].id)
+        }).catch(
+            console.log("cos nie tak")
+        );
+    }, [])
 
 
     useEffect(() => {
@@ -38,11 +70,9 @@ function MainPage() {
             .catch((error) => console.error(error));
     }, []);
 
-    
 
-    const handleDateChange = (date) => {
-        setSelectedDate(date);
-    };
+
+    
 
     const handleMouseEnter = (movie) => {
         setHoveredMovie(movie);
@@ -105,7 +135,7 @@ function MainPage() {
         return slides;
     };
 
-    
+
 
     return (
         <div>
@@ -115,15 +145,26 @@ function MainPage() {
                     {renderMovieSlides()}
                 </Carousel>
             </div>
-            <h2 className={classes.naglowek}>Aktualny Repertuar</h2>
-            <div className={classes.datepicker}>
-            <DatePicker 
-                className={classes.datepickerInput}
-                selected={selectedDate}
-                onChange={(date) => setSelectedDate(date)}
-                dateFormat="yyyy-MM-dd"
-                placeholderText="Wybierz datę"
-            />
+            <h2 className={classes.naglowek}>Aktualny repertuar</h2>
+            <div className={classes.picker}>
+                <label for="time" class="form-label" style={{ marginRight: '40px', width: '100px' }}>Wybierz kino:</label>
+                {cinemas &&
+                    <select className='form-select' style={{ marginRight: '20px', width: '350px' }} onChange={HandleSelect} ref={cinemaIdRef}>
+                        {cinemas.map(c => {
+                            return <option key={c.id} value={c.id}>
+                                {c.name + ' - ' + c.city}
+                            </option>
+                        })}
+                    </select>
+                }
+
+                <label for="time" class="form-label" style={{ marginRight: '40px', width: '100px' }}>Wybierz datę:</label>
+                <input type="date" style={{ marginRight: '40px', width: '200px' }} name="" id="time" class="form-control" placeholder="" ref={chosenDate} required />
+                <button className="btn btn-btn btn-secondary" style={{ marginRight: '40px', width: '100px' }} onClick={handleClick}>Szukaj</button>
+
+            </div>
+            <div>
+                {isLoading === true && <Screenings date={chosenDate.current.value} cinema={cinema} />}
             </div>
         </div>
     );
