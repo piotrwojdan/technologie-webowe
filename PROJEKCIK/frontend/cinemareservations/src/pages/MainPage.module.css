@@ -33,6 +33,7 @@
 .naglowek {
     margin-left: -275px;
     margin-bottom: 20px;
+    display: 'inline-block'
 }
 
 .custom {
@@ -107,4 +108,10 @@
     width: 300px;
   }
   
+  .picker{
+    display: flex;
+    width: 1200px;
+    margin-left: -250px;
+
+  }
   
