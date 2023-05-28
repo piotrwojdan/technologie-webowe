@@ -36,7 +36,7 @@ function ComingSoon() {
                             <LargeCard>
                                 <div className="row">
                                     <div className="col-3">
-                                        <img src={m.images.poster[1].medium.film_image}></img>
+                                        <img src={m.images.poster[1] ? m.images.poster[1].medium.film_image : ''}></img>
                                     </div>
 
                                     <div className="col-9">

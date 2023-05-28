@@ -109,7 +109,7 @@ function MainPage() {
                                     onMouseLeave={handleMouseLeave}>
                                     <img
                                         className={classes.item}
-                                        src={movie.images.poster[1].medium.film_image}
+                                        src={movie.images.poster[1] ? movie.images.poster[1].medium.film_image : ''}
                                         alt={movie.film_name}
                                     />
                                     <div >
@@ -141,9 +141,9 @@ function MainPage() {
         <div>
             <h2 className={classes.naglowek}>Nadchodzące filmy</h2>
             <div className={classes.container}>
-                <Carousel className={classes.custom}>
+                {movies && <Carousel className={classes.custom}>
                     {renderMovieSlides()}
-                </Carousel>
+                </Carousel> }
             </div>
             <h2 className={classes.naglowek}>Aktualny repertuar</h2>
             <div className={classes.picker}>

@@ -8,5 +8,5 @@
 .screen {
     background-color: darkgrey;
     position: 'absolute';
-    transform: translate(10%, 50%);
+    transform: translate(0%, 50%);
 }
