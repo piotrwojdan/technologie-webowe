@@ -32,7 +32,7 @@ function Repertuar() {
   useEffect(() => {
     axios.get('http://localhost:8080/screenings/cinema/' + cinema).then(res => {
       const c = res.data;
-
+      
       const movies = c.map(t => t.movie_id).filter((val, idx, arr) => arr.indexOf(val) === idx)
 
       const actualScreenings = movies.map(movie => {

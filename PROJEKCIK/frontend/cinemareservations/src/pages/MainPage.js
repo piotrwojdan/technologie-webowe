@@ -23,17 +23,26 @@ function MainPage() {
 
     const cinemaIdRef = useRef();
 
-    function HandleSelect() {
-        setCinema(cinemaIdRef.current.value);
+    function HandleSelect(event) {
+        const selectedCinemaId = event.target.value;
+
+        const longValue = parseInt(selectedCinemaId, 10);
+        console.log(selectedCinemaId);
+        console.log(typeof longValue)
+        setCinema(longValue);
     }
 
     const handleClick = (event) => {
         setIsLoading(true);
-        const selectedCinemaId = event.target.value;
-        setCinema(selectedCinemaId)
-        console.log(chosenDate.current.value)
-
-
+        // console.log(chosenDate.current.value);
+        // console.log(typeof chosenDate);
+        // const selectedCinemaId = event.target.value;
+        // const longValue = parseInt(selectedCinemaId, 10);
+        // console.log(selectedCinemaId);
+        // console.log(typeof selectedCinemaId);
+        // console.log(chosenDate.current.value);
+        // console.log(cinema);
+        
 
 
     };
@@ -72,7 +81,7 @@ function MainPage() {
 
 
 
-    
+
 
     const handleMouseEnter = (movie) => {
         setHoveredMovie(movie);
@@ -143,7 +152,7 @@ function MainPage() {
             <div className={classes.container}>
                 {movies && <Carousel className={classes.custom}>
                     {renderMovieSlides()}
-                </Carousel> }
+                </Carousel>}
             </div>
             <h2 className={classes.naglowek}>Aktualny repertuar</h2>
             <div className={classes.picker}>
@@ -163,8 +172,8 @@ function MainPage() {
                 <button className="btn btn-btn btn-secondary" style={{ marginRight: '40px', width: '100px' }} onClick={handleClick}>Szukaj</button>
 
             </div>
-            <div>
-                {isLoading === true && <Screenings date={chosenDate.current.value} cinema={cinema} />}
+            <div className={classes.screening}>
+                {isLoading === true && <Screenings cinema={cinema} date={chosenDate.current.value}/>}
             </div>
         </div>
     );

@@ -2,27 +2,35 @@ import React, { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import LargeCard from "../UI/LargeCard";
 import axios from "axios";
-import Screening from "../components/Screening";
+import ScreeningMain from "../components/ScreeningMain";
 
 
 function Screenings(props) {
     const [screenings, setScreenings] = useState([]);
+    const [image, setImage] = useState();
+    const [movie, setMovie] = useState();
+
 
 
     useEffect(() => {
+        //console.log(props.cinema)
         axios.get('http://localhost:8080/screenings/cinema/' + props.cinema).then(res => {
             const c = res.data;
-
+            //console.log(c);
             const filteredScreenings = c.filter(screening => {
-                const screeningDate = new Date(screening.date); // Konwertujemy datę seansu na obiekt Date
-                const selectedDate = new Date(props.date); // Konwertujemy przekazaną datę na obiekt Date
+                const screeningDate = new Date(screening.time);
+                //console.log(screeningDate);
+                const propsDate = new Date(props.date);
+                //console.log(propsDate);
 
-                // Porównujemy tylko datę seansu (ignorujemy czas)
-                return screeningDate.toDateString() === selectedDate.toDateString();
+
+                return screeningDate.toDateString() === propsDate.toDateString();
             });
 
             setScreenings(filteredScreenings);
-            // console.log(screenings);
+
+
+            //console.log(filteredScreenings);
 
 
         }).catch(
@@ -32,12 +40,24 @@ function Screenings(props) {
 
 
 
+
+
+
     return (
-        <><ul>
-            {screenings && screenings.map((s) => {
-                return <li key={s.id}><Screening screening={s}></Screening></li>
-            })}
-        </ul></>
+        <>
+            {screenings && screenings.length > 0 ? (
+                <ul>
+                    {screenings.map(screening => (
+                        <li key={screening.id}>
+                            <ScreeningMain screening={screening}></ScreeningMain>
+                        </li>
+                    ))}
+                </ul>
+            ) : (
+                <p style={{ marginLeft: '250px' }}>Brak dostępnych seansów.</p>
+            )}
+        </>
+
     );
 }
 
