@@ -4,7 +4,7 @@ import classes from './MainPage.module.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import Screenings from "./Screenings";
+import Repertuar from "./Repertuar";
 import axios from "axios";
 
 
@@ -136,8 +136,9 @@ function MainPage() {
                                                 <p>{movie.release_dates[0].release_date}</p>
                                             </div>
                                         )}
-                                        <h3 className={classes.title}>{movie.film_name}</h3>
                                     </div>
+                                    <h3 className={classes.title}>{movie.film_name}</h3>
+
                                 </div>
                             </div>
                         ))}
@@ -154,35 +155,18 @@ function MainPage() {
 
 
     return (
-        <div>
-            <h2 className={classes.naglowek}>Nadchodzące filmy</h2>
-            <div className={classes.container}>
-                {movies && <Carousel className={classes.custom}>
-                    {renderMovieSlides()}
-                </Carousel>}
+        <div className="container">
+
+            <div style={{ height: "45vh" }}>
+                <h2 className={classes.naglowek}>Nadchodzące filmy</h2>
+                <div className={classes.container}>
+                    {movies && <Carousel>
+                        {renderMovieSlides()}
+                    </Carousel>}
+                </div>
             </div>
             <h2 className={classes.naglowek}>Aktualny repertuar</h2>
-            <div className={classes.picker}>
-                <label for="time" class="form-label" className={classes.text}>Wybierz kino:</label>
-                {cinemas &&
-                    <select className='form-select' style={{ marginRight: '20px', width: '350px' }} onChange={HandleSelect} ref={cinemaIdRef}>
-                        {cinemas.map(c => {
-                            return <option key={c.id} value={c.id}>
-                                {c.name + ' - ' + c.city}
-                            </option>
-                        })}
-                    </select>
-                }
-
-                <label for="time" class="form-label" className={classes.text}>Wybierz datę:</label>
-                <input type="date" style={{ marginRight: '40px', width: '200px' }} name="" id="time" class="form-control" placeholder="" ref={chosenDate} value={selectedDate ? selectedDate.toISOString().split("T")[0] : ""}
-                    onChange={handleDateChange} />
-                <button className="btn btn-btn btn-secondary" style={{ marginRight: '40px', width: '100px' }} onClick={handleClick}>Szukaj</button>
-
-            </div>
-            <div className={classes.screening}>
-                <Screenings cinema={cinema} date={date} />
-            </div>
+            <Repertuar></Repertuar>
         </div>
     );
 }

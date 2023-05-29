@@ -60,7 +60,7 @@ function Screenings(props) {
                     ))}
                 </ul>
             ) : (
-                <p style={{ marginLeft: '250px' }}>Brak dostępnych seansów.</p>
+                <p style={{ display: "flex", justifyContent: "center"}}>Brak dostępnych seansów.</p>
             )}
         </>
 

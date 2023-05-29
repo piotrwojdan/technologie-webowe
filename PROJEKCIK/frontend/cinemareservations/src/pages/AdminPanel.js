@@ -48,7 +48,7 @@ function AdminPanel() {
                                         <p>
                                             {m.synopsis_long}
                                         </p>
-                                        <button onClick={() => handleClick(m)} className="btn">Dodaj Seans</button>
+                                        <button onClick={() => handleClick(m)} className="btn btn-secondary">Dodaj Seans</button>
                                     </div>
 
                                     

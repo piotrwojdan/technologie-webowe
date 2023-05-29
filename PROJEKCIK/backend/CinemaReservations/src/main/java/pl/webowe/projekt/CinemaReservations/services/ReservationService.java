@@ -52,15 +52,20 @@ public class ReservationService {
     public List<Reservation> updateReservations(String clientMail, List<Long> seat_id, long screening_id, LocalDateTime dateTime) throws NotFoundException {
 
             List<Reservation> reservations = new ArrayList<>();
+            LocalDateTime now = LocalDateTime.now();
             for(Long l: seat_id) {
                 Reservation reservation = reservationRepository.findBySeatIdAndScreeningId(l, screening_id);
                 if (reservation == null){
                     throw new NotFoundException();
                 }
-                if (reservation.getClient_mail() != null ||
-                        reservation.getReservation_date() != null ||
-                        (reservation.getReservation_date() != null && reservation.getReservation_date().isAfter(LocalDateTime.now())))
-                    return null;
+
+                if (clientMail.equals("payment")) {
+                    if (reservation.getClient_mail() != null) {
+                        if (reservation.getReservation_date() != null && reservation.getReservation_date().isAfter(now))
+                            return null;
+                    }
+                }
+
                 reservation.setClient_mail(clientMail);
                 reservation.setReservation_date(dateTime);
                 reservationRepository.saveAndFlush(reservation);
