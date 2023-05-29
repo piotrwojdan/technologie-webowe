@@ -1,0 +1,404 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-sequences
+      author: Magdalena
+      changes:
+        - createSequence:
+            sequenceName: admins_seq
+            startValue: 1
+            incrementBy: 50
+        - createSequence:
+            sequenceName: cinemas_seq
+            startValue: 1
+            incrementBy: 50
+        - createSequence:
+            sequenceName: reservations_seq
+            startValue: 1
+            incrementBy: 50
+        - createSequence:
+            sequenceName: rooms_seq
+            startValue: 1
+            incrementBy: 50
+        - createSequence:
+            sequenceName: screenings_seq
+            startValue: 1
+            incrementBy: 50
+        - createSequence:
+            sequenceName: seat_types_seq
+            startValue: 1
+            incrementBy: 50
+        - createSequence:
+            sequenceName: seats_seq
+            startValue: 1
+            incrementBy: 50
+
+  - changeSet:
+      id: create-tables
+      author: Magdalena
+      changes:
+        - createTable:
+            tableName: admins
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: password
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: username
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+
+        - createTable:
+            tableName: cinemas
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: city
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+
+        - createTable:
+            tableName: reservations
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: client_mail
+                  type: varchar(255)
+              - column:
+                  name: reservation_date
+                  type: timestamp(6)
+              - column:
+                  name: screening_id
+                  type: bigint
+              - column:
+                  name: seat_id
+                  type: bigint
+
+        - createTable:
+            tableName: rooms
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: rows_number
+                  type: integer
+                  constraints:
+                    nullable: false
+              - column:
+                  name: screen_size
+                  type: integer
+                  constraints:
+                    nullable: false
+              - column:
+                  name: screen_x
+                  type: integer
+                  constraints:
+                    nullable: false
+              - column:
+                  name: screen_y
+                  type: integer
+                  constraints:
+                    nullable: false
+              - column:
+                  name: seats_number
+                  type: integer
+                  constraints:
+                    nullable: false
+              - column:
+                  name: cinema_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+
+        - createTable:
+            tableName: screenings
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: movie_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: time
+                  type: timestamp(6)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: room_id
+                  type: bigint
+
+        - createTable:
+            tableName: screenings_reservations
+            columns:
+              - column:
+                  name: screening_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: reservations_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+
+        - createTable:
+            tableName: seat_types
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: price
+                  type: float(53)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: type
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+
+        - createTable:
+            tableName: seats
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: seat_number
+                  type: integer
+                  constraints:
+                    nullable: false
+              - column:
+                  name: seat_row
+                  type: integer
+                  constraints:
+                    nullable: false
+              - column:
+                  name: room_id
+                  type: bigint
+              - column:
+                  name: seat_type_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: add-foreign-keys
+      author: Magdalena
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: screenings_reservations
+            baseColumnNames: reservations_id
+            referencedTableName: reservations
+            referencedColumnNames: id
+            constraintName: FK_cxwu4rnr7yy4rq5kxbh2mplqn
+
+        - addForeignKeyConstraint:
+            baseTableName: seats
+            baseColumnNames: seat_type_id
+            referencedTableName: seat_types
+            referencedColumnNames: id
+            constraintName: UK_hrroc3d2o4kovmk7h2h66f7us
+
+        - addForeignKeyConstraint:
+            baseTableName: reservations
+            baseColumnNames: screening_id
+            referencedTableName: screenings
+            referencedColumnNames: id
+            constraintName: FKps2fsuvl9g54tk7qitklej8rh
+
+        - addForeignKeyConstraint:
+            baseTableName: reservations
+            baseColumnNames: seat_id
+            referencedTableName: seats
+            referencedColumnNames: id
+            constraintName: FK57amums6j9fkqwbpw4oceyw9i
+
+        - addForeignKeyConstraint:
+            baseTableName: rooms
+            baseColumnNames: cinema_id
+            referencedTableName: cinemas
+            referencedColumnNames: id
+            constraintName: FKjp9bjtvlojbw581bpq23cpw4j
+
+        - addForeignKeyConstraint:
+            baseTableName: screenings
+            baseColumnNames: room_id
+            referencedTableName: rooms
+            referencedColumnNames: id
+            constraintName: FKq9rxs70hfk4yejjiqw86cxj6t
+
+        - addForeignKeyConstraint:
+            baseTableName: screenings_reservations
+            baseColumnNames: reservations_id
+            referencedTableName: reservations
+            referencedColumnNames: id
+            constraintName: FKkgyiqofflcekwtr7sq3bufyq3
+
+        - addForeignKeyConstraint:
+            baseTableName: screenings_reservations
+            baseColumnNames: screening_id
+            referencedTableName: screenings
+            referencedColumnNames: id
+            constraintName: FKfd319yn4g5ti
+
+  - changeSet:
+      id: insert-into-tables
+      author: Piotr
+      changes:
+        - insert:
+            tableName: CINEMAS
+            columns:
+              - column:
+                  name: id
+                  value: 1
+              - column:
+                  name: name
+                  value: Multikino
+              - column:
+                  name: city
+                  value: Wrocław
+        - insert:
+            tableName: CINEMAS
+            columns:
+              - column:
+                  name: id
+                  value: 2
+              - column:
+                  name: name
+                  value: Multikino
+              - column:
+                  name: city
+                  value: Kalisz
+#  - changeSet:
+#      id: insert-into-rooms
+#      author: Piotr
+#      changes:
+#          - insert:
+#            tableName: rooms
+#            columns:
+#              - column:
+#                  name: name
+#                  value: 'SALA 1'
+#              - column:
+#                  name: screen_size
+#                  value: 200
+#              - column:
+#                  name: screen_x
+#                  value: 10
+#              - column:
+#                  name: screen_y
+#                  value: 10
+#              - column:
+#                  name: rows_number
+#                  value: 10
+#              - column:
+#                  name: seats_number
+#                  value: 19
+#              - column:
+#                  name: cinema_id
+#                  value: 1
+#              - column:
+#                  name: name
+#                  value: 'SALA 2'
+#              - column:
+#                  name: screen_size
+#                  value: 200
+#              - column:
+#                  name: screen_x
+#                  value: 10
+#              - column:
+#                  name: screen_y
+#                  value: 10
+#              - column:
+#                  name: rows_number
+#                  value: 9
+#              - column:
+#                  name: seats_number
+#                  value: 20
+#              - column:
+#                  name: cinema_id
+#                  value: 1
+#              - column:
+#                  name: name
+#                  value: 'SALA 3'
+#              - column:
+#                  name: screen_size
+#                  value: 200
+#              - column:
+#                  name: screen_x
+#                  value: 10
+#              - column:
+#                  name: screen_y
+#                  value: 10
+#              - column:
+#                  name: rows_number
+#                  value: 10
+#              - column:
+#                  name: seats_number
+#                  value: 17
+#              - column:
+#                  name: cinema_id
+#                  value: 1
+#              - column:
+#                  name: name
+#                  value: 'SALA 1'
+#              - column:
+#                  name: screen_size
+#                  value: 200
+#              - column:
+#                  name: screen_x
+#                  value: 10
+#              - column:
+#                  name: screen_y
+#                  value: 10
+#              - column:
+#                  name: rows_number
+#                  value: 10
+#              - column:
+#                  name: seats_number
+#                  value: 17
+#              - column:
+#                  name: cinema_id
+#                  value: 2
+#
+#
