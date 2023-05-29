@@ -50,11 +50,9 @@ function Reservation(props) {
             .then(resp => response = resp.data)
             .catch(err => console.error(err));
 
-        console.log(response)
-
-        // if (!response) {
-        //     return
-        // }
+        if (!response) {
+            return
+        }
 
         const seats = response.map(r => r.seat)
         const data = {
