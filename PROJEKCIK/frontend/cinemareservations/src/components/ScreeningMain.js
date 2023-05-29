@@ -13,7 +13,7 @@ function ScreeningMain(props) {
 
 
     useEffect(() => {
-        console.log(props.screening.movie_id)
+        console.log(props.screening)
         fetch("https://api-gate2.movieglu.com/filmDetails/?film_id=" + props.screening.movie_id, {
             method: "GET",
             headers: {

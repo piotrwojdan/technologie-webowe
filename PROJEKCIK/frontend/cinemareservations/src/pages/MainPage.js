@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Carousel } from 'react-bootstrap';
-import classes from './MainPage.module.css'
+import classes from './MainPage.module.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -16,9 +16,13 @@ function MainPage() {
     const [selectedDate, setSelectedDate] = useState(null);
     const [cinemas, setCinemas] = useState([]);
     const [cinema, setCinema] = useState(0);
+    const [date, setDate] = useState(0);
+
     const chosenDate = useRef();
     const [screenings, setScreenings] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+
+    const today = new Date().toISOString().split("T")[0];
 
 
     const cinemaIdRef = useRef();
@@ -30,22 +34,25 @@ function MainPage() {
         console.log(selectedCinemaId);
         console.log(typeof longValue)
         setCinema(longValue);
+        //setIsLoading(false);
     }
 
-    const handleClick = (event) => {
-        setIsLoading(true);
-        // console.log(chosenDate.current.value);
-        // console.log(typeof chosenDate);
-        // const selectedCinemaId = event.target.value;
-        // const longValue = parseInt(selectedCinemaId, 10);
-        // console.log(selectedCinemaId);
-        // console.log(typeof selectedCinemaId);
-        // console.log(chosenDate.current.value);
-        // console.log(cinema);
-        
+    const handleClick = () => {
+        if (selectedDate) {
+            const formattedDate = selectedDate.toISOString().split("T")[0];
+            setDate(formattedDate);
+        }
+
+
 
 
     };
+
+    const handleDateChange = (event) => {
+        const selectedDate = new Date(event.target.value);
+        setSelectedDate(selectedDate);
+    };
+
 
     useEffect(() => {
         axios.get('http://localhost:8080/cinemas').then(res => {
@@ -156,7 +163,7 @@ function MainPage() {
             </div>
             <h2 className={classes.naglowek}>Aktualny repertuar</h2>
             <div className={classes.picker}>
-                <label for="time" class="form-label" style={{ marginRight: '40px', width: '100px' }}>Wybierz kino:</label>
+                <label for="time" class="form-label" className={classes.text}>Wybierz kino:</label>
                 {cinemas &&
                     <select className='form-select' style={{ marginRight: '20px', width: '350px' }} onChange={HandleSelect} ref={cinemaIdRef}>
                         {cinemas.map(c => {
@@ -167,13 +174,14 @@ function MainPage() {
                     </select>
                 }
 
-                <label for="time" class="form-label" style={{ marginRight: '40px', width: '100px' }}>Wybierz datę:</label>
-                <input type="date" style={{ marginRight: '40px', width: '200px' }} name="" id="time" class="form-control" placeholder="" ref={chosenDate} required />
+                <label for="time" class="form-label" className={classes.text}>Wybierz datę:</label>
+                <input type="date" style={{ marginRight: '40px', width: '200px' }} name="" id="time" class="form-control" placeholder="" ref={chosenDate} value={selectedDate ? selectedDate.toISOString().split("T")[0] : ""}
+                    onChange={handleDateChange} />
                 <button className="btn btn-btn btn-secondary" style={{ marginRight: '40px', width: '100px' }} onClick={handleClick}>Szukaj</button>
 
             </div>
             <div className={classes.screening}>
-                {isLoading === true && <Screenings cinema={cinema} date={chosenDate.current.value}/>}
+                <Screenings cinema={cinema} date={date} />
             </div>
         </div>
     );

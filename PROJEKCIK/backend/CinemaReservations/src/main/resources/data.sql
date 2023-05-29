@@ -1,8 +1,3 @@
-insert into
-    cinemas(id,name,city)
-values
-    (1,'Multikino' ,'Wrocław'),
-    (2,'Multikino' ,'Kalisz');
 
 insert into
     rooms(id, name, screen_size, screen_x, screen_y, rows_number, seats_number, cinema_id)

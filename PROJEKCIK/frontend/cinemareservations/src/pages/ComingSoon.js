@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import LargeCard from "../UI/LargeCard";
-import {useNavigate} from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 function ComingSoon() {
     const navigate = useNavigate()
@@ -25,7 +25,7 @@ function ComingSoon() {
             .catch(((error) => console.error(error)))
     }, [])
 
-    
+
 
     return (
         <>
@@ -46,9 +46,13 @@ function ComingSoon() {
                                         <p>
                                             {m.synopsis_long}
                                         </p>
+                                        <h6>                                        
+                                            Premiera: {m.release_dates[0].release_date}
+                                        </h6>
                                     </div>
 
-                                    
+
+
 
                                 </div>
                             </LargeCard>
