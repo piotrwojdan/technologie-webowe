@@ -1,5 +1,6 @@
 package pl.webowe.projekt.CinemaReservations.services;
 
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import pl.webowe.projekt.CinemaReservations.exceptions.NotFoundException;
 import pl.webowe.projekt.CinemaReservations.models.*;
@@ -47,6 +48,7 @@ public class ReservationService {
         }
     }
 
+    @Transactional
     public List<Reservation> updateReservations(String clientMail, List<Long> seat_id, long screening_id, LocalDateTime dateTime) throws NotFoundException {
 
             List<Reservation> reservations = new ArrayList<>();
@@ -55,7 +57,7 @@ public class ReservationService {
                 if (reservation == null){
                     throw new NotFoundException();
                 }
-                if (reservation.getClient_mail() == null ||
+                if (reservation.getClient_mail() != null ||
                         reservation.getReservation_date() != null ||
                         (reservation.getReservation_date() != null && reservation.getReservation_date().isAfter(LocalDateTime.now())))
                     return null;

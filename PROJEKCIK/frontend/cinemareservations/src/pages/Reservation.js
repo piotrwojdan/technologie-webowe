@@ -1,21 +1,70 @@
 import React, { useState, useEffect } from "react";
 import RoomView from "../components/RoomView";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import classes from "./Reservation.module.css"
+import axios from "axios";
 
 function Reservation(props) {
     const location = useLocation();
+    const navigate = useNavigate();
     const screening = location.state;
     const [seatList, setSeatList] = useState([]);
     const [seatTypes, setSeatTypes] = useState([]);
     const [movie, setMovie] = useState();
     const [selectedSeatsReservation, setSelectedSeatsReservation] = useState([]);
+    const [price, setPrice] = useState(0.0);
 
     const seatWidth = 18;
     const seatHeight = 18;
 
     function setSeatsFromRoomView(seats) {
+        // setSelectedSeatsReservation(seats);
         setSelectedSeatsReservation(seats);
-        console.log(selectedSeatsReservation);
+        setPrice(calculatePrice(seats))
+
+    }
+
+    function calculatePrice(seats) {
+        const prices = seats.map(s => {
+            const seat = seatList.find(ss => ss.id === s);
+            return seat.seatType.price;
+        })
+        const sum = prices.reduce((sum, p) => sum + p, 0);
+        return sum;
+    }
+
+    async function goToPayment() {
+        const date_now = new Date();
+        date_now.setMinutes(date_now.getMinutes() + 15)
+        date_now.setHours(date_now.getHours() + 2)
+        const body = {
+            client_mail: "payment",
+            seat_id: selectedSeatsReservation,
+            screening: screening.id,
+            reservation_date: date_now.toISOString().substring(0,23)
+        }
+
+        let response;
+
+        await axios.put("http://localhost:8080/reservations", body)
+            .then(resp => response = resp.data)
+            .catch(err => console.error(err));
+
+        console.log(response)
+
+        // if (!response) {
+        //     return
+        // }
+
+        const seats = response.map(r => r.seat)
+        const data = {
+            screening: screening,
+            seats: seats,
+            price: price,
+            movie: movie
+        }
+
+        navigate("/payment", {state: data})
     }
 
     useEffect(() => {
@@ -77,15 +126,33 @@ function Reservation(props) {
                             {movie && <h6>Film: {movie.film_name}</h6>}
                             <p>Sala: {screening.room.name}</p>
                             <p>Wybrane miejsca:</p>
-                            {selectedSeatsReservation && selectedSeatsReservation.map(s => {
-                                const seat = seatList.filter(ss => ss.id = s)[0]
-                                console.log(seat)
-                                return (<>
-                                    <p>{seat.row}</p>
-                                    <p>{seat.number}</p>
-                                </>
-                                )
-                            })}
+                            <ul>
+
+                                <div className="d-flex flex-row flex-wrap">
+                                    {selectedSeatsReservation && selectedSeatsReservation.map(s => {
+
+                                        const seat = seatList.find(ss => ss.id === s)
+                                        const backColor = 'blue'
+                                        const seatStyle = {
+                                            width: seatWidth + 4 + 'px',
+                                            height: seatHeight + 4 + 'px',
+                                            backgroundColor: backColor,
+                                            color: 'white',
+                                            borderRadius: `0 0 ${seatWidth / 2}px ${seatWidth / 2}px`,
+                                        };
+                                        return (
+                                            <>
+                                                <div className="d-flex flex-row p-1">
+                                                    <p>{seat.row}</p>
+                                                    <div className={classes.text} style={seatStyle}>{seat.number}</div>
+                                                </div>
+                                            </>
+                                        )
+                                    })}
+                                </div>
+
+                            </ul>
+                            <p>Cena: {price.toFixed(2)}zł</p>
                         </div>
                     </div>
                     <div className="col-4">
@@ -149,9 +216,15 @@ function Reservation(props) {
                             </div>
                         </div>
                     </div>
+                </div >
+                <div className="row">
+                    <div className="col-12">
+                        <div className="d-flex flex-row-reverse">
+                            <button onClick={goToPayment} className="btn btn-secondary">Buy!</button>
+                        </div>
+                    </div>
                 </div>
-
-            </div>
+            </div >
         </>
     );
 }
