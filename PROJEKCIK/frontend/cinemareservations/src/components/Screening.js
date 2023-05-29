@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import LargeCard from "../UI/LargeCard";
 import classes from './Screening.module.css'
 import Reservation from "../pages/Reservation";
-import {useNavigate} from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 function Screening(props) {
     const [movie, setMovie] = useState();
@@ -47,9 +47,9 @@ function Screening(props) {
                 ) : (
                     <p>{fullText.slice(0, 200)}...</p>
                 )}<div style={{ float: 'right' }}>
-                <button style={{ textAlign: 'right'}} className="btn" onClick={toggleText}>
-                    {showFullText ? 'Czytaj mniej' : 'Czytaj więcej'}
-                </button>
+                    <button style={{ textAlign: 'right' }} className="btn" onClick={toggleText}>
+                        {showFullText ? 'Czytaj mniej' : 'Czytaj więcej'}
+                    </button>
                 </div>
             </div>
         );
@@ -58,15 +58,18 @@ function Screening(props) {
 
     const SessionTime = ({ time, s }) => {
         const extractedTime = new Date(time);
+        const currentTime = new Date();
+
         const handleButtonClick = (screening) => {
-            navigate("/reservation", {state: screening})
+            navigate("/reservation", { state: screening })
         };
-        
+        const isButtonDisabled = extractedTime < currentTime;
+
         return (
-            
+
             <div className={classes.myButton}>
 
-                <button type="button" className="btn btn-outline-secondary" onClick={() => handleButtonClick(s)}>{extractedTime.getHours()}:{extractedTime.getMinutes()}</button>
+                <button type="button" className="btn btn-outline-secondary" onClick={() => handleButtonClick(s)} disabled={isButtonDisabled}>{extractedTime.getHours()}:{extractedTime.getMinutes()}</button>
 
             </div>
         );
@@ -88,11 +91,11 @@ function Screening(props) {
                         <p> {movie.duration_mins} min</p>
                         <Description fullText={movie.synopsis_long}></Description>
                         <div className={classes.container}>
-                        {props.screening.map(s => {
-                            return <SessionTime s={s} time={s.time}></SessionTime>
-                        })}
+                            {props.screening.map(s => {
+                                return <SessionTime s={s} time={s.time}></SessionTime>
+                            })}
                         </div>
-                        
+
                     </div>
 
                 </div>

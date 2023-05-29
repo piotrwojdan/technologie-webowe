@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import LargeCard from "../UI/LargeCard";
 import axios from "axios";
-import ScreeningMain from "../components/ScreeningMain";
+import Screening from "../components/Screening";
 
 
 function Screenings(props) {
@@ -17,20 +17,26 @@ function Screenings(props) {
         axios.get('http://localhost:8080/screenings/cinema/' + props.cinema).then(res => {
             const c = res.data;
             //console.log(c);
-            const filteredScreenings = c.filter(screening => {
+            const filteredScreenings = c.reduce((filtered, screening) => {
                 const screeningDate = new Date(screening.time);
-                //console.log(screeningDate);
                 const propsDate = new Date(props.date);
-                //console.log(propsDate);
 
+                if (screeningDate.toDateString() === propsDate.toDateString()) {
+                    filtered.push(screening);
+                }
 
-                return screeningDate.toDateString() === propsDate.toDateString();
+                return filtered;
+            }, []);
+
+            const movies = filteredScreenings.map(t => t.movie_id).filter((val, idx, arr) => arr.indexOf(val) === idx);
+
+            const actualScreenings = movies.map(movie => {
+                return filteredScreenings.filter(t => t.movie_id === movie);
             });
 
-            setScreenings(filteredScreenings);
+            setScreenings(actualScreenings);
 
 
-            //console.log(filteredScreenings);
 
 
         }).catch(
@@ -41,7 +47,7 @@ function Screenings(props) {
 
 
 
-
+    
 
     return (
         <>
@@ -49,7 +55,7 @@ function Screenings(props) {
                 <ul>
                     {screenings.map(screening => (
                         <li key={screening.id}>
-                            <ScreeningMain screening={screening}></ScreeningMain>
+                            <Screening screening={screening}></Screening>
                         </li>
                     ))}
                 </ul>
