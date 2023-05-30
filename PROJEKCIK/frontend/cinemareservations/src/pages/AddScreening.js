@@ -4,7 +4,7 @@ import LargeCard from "../UI/LargeCard";
 import axios from "axios";
 import classes from "./AddScreening.module.css"
 
-function AddScreening() {
+function AddScreening(props) {
     const location = useLocation();
     const navigate = useNavigate();
     const movie = location.state;
@@ -51,8 +51,18 @@ function AddScreening() {
 
         let response;
         let error;
+        console.log(screeningData)
+        console.log(`Bearer ${props.user.access_token}`);
 
-        await axios.post('http://localhost:8080/screenings', screeningData)
+        await axios({
+            method: 'POST', 
+            url: 'http://localhost:8080/screenings',
+            headers: {
+                Authorization: `Bearer ${props.user.access_token}`,
+                'Content-Type': 'application/json',
+            },
+            data: screeningData,
+        })
             .then(resp => response = resp.data)
             .catch(err => error = err);
 

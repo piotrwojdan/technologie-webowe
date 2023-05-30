@@ -1,17 +1,30 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios"
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import { useGoogleLogin, googleLogout } from "@react-oauth/google";
 
-function LoginPage() {
+
+function LoginPage(props) {
+    const navigate = useNavigate();
 
     const [login, setLogin] = useState("");
     const [haslo, setHaslo] = useState("");
 
-    const navigate = useNavigate();
+
+    const logIn = useGoogleLogin({
+        onSuccess: (codeResponse) => {
+            props.setUser(codeResponse)
+            navigate("/admin");
+        },
+        onError: (error) => console.log('Login Failed:', error)
+    });
+
+
+
 
     const logInUser = async () => {
-        // tu logowanie z backa trzeba zrobic plus to sso 
-        navigate("/admin");
+        // tu by byla logika logowania gdyby byly zwykle konta
+        // natomiast jest ono realizowane poprzez sso dlatego zostanie tu pusto
     };
 
     return (
@@ -26,6 +39,7 @@ function LoginPage() {
                         value={login}
                         onChange={(e) => setLogin(e.target.value)}
                         id="login"
+                        required
                     />
                 </div>
                 <div className="form-group py-2">
@@ -36,12 +50,18 @@ function LoginPage() {
                         value={haslo}
                         onChange={(e) => setHaslo(e.target.value)}
                         id="password"
+                        required
                     />
                 </div>
-                <button className="btn btn-primary my-2" type="button" onClick={() => logInUser()}>
-                    Zaloguj
-                </button>
+                <div className="d-flex flex-row-reverse">
+                    <button className="btn btn-secondary my-2" type="button" onClick={() => logInUser()}>
+                        Log in
+                    </button>
+                </div>
             </form>
+            <div style={{ display: "flex", justifyContent: "center" }}>
+                <button className="btn btn-primary px-5 my-2" onClick={() => logIn()}>SSO - Sign in with Google</button>
+            </div>
         </div>
     )
 }

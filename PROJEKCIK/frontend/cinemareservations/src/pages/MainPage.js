@@ -7,9 +7,6 @@ import 'react-datepicker/dist/react-datepicker.css';
 import Repertuar from "./Repertuar";
 import axios from "axios";
 
-
-
-
 function MainPage() {
     const [movies, setMovies] = useState([]);
     const [hoveredMovie, setHoveredMovie] = useState(null);

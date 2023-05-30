@@ -5,10 +5,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.webowe.projekt.CinemaReservations.exceptions.NotFoundException;
-import pl.webowe.projekt.CinemaReservations.models.Cinema;
 import pl.webowe.projekt.CinemaReservations.models.Screening;
-import pl.webowe.projekt.CinemaReservations.services.CinemaService;
 import pl.webowe.projekt.CinemaReservations.services.ScreeningService;
+import pl.webowe.projekt.CinemaReservations.util.Verifier;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -34,14 +33,22 @@ public class ScreeningController {
     }
 
     @PostMapping(value = "/screenings")
-    public ResponseEntity<Screening> addScreening(@RequestBody ObjectNode json){
-        if (!json.has("time") || !json.has("movie_id") || !json.has("room_id"))
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+    public ResponseEntity<Screening> addScreening(@RequestHeader("Authorization") String authorizationHeader, @RequestBody ObjectNode json){
+        String accessToken = authorizationHeader.replace("Bearer ", "");
 
-        try {
-            return new ResponseEntity<>(screeningService.addScreening(LocalDateTime.parse(json.get("time").asText()), json.get("movie_id").asInt(), json.get("room_id").asInt()), HttpStatus.CREATED);
-        } catch (NotFoundException e) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        var payload = Verifier.verify(accessToken);
+
+        if (payload != null) {
+            if (!json.has("time") || !json.has("movie_id") || !json.has("room_id"))
+                return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+
+            try {
+                return new ResponseEntity<>(screeningService.addScreening(LocalDateTime.parse(json.get("time").asText()), json.get("movie_id").asInt(), json.get("room_id").asInt()), HttpStatus.CREATED);
+            } catch (NotFoundException e) {
+                return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            }
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.NETWORK_AUTHENTICATION_REQUIRED);
         }
     }
 
