@@ -1,10 +1,11 @@
-import React, { useRef } from "react";
-import { useLocation } from "react-router";
+import React, { useRef, useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router";
 import classes from "./Reservation.module.css"
 import axios from "axios";
 
 function Payment() {
     const location = useLocation();
+    const navigate = useNavigate();
     const reservationData = location.state;
 
     const mailRef = useRef();
@@ -13,6 +14,32 @@ function Payment() {
 
     const seatWidth = 18;
     const seatHeight = 18;
+
+    let timer;
+
+    useEffect(() => {
+        timer = setTimeout(() => {
+            alert("Czas rezerwacji miejsc się zakończył, spróbuj ponownie!");
+            navigate("/repertuar");
+        }, 15 * 60 * 1000)
+        return () => clearTimeout(timer)
+    }, [])
+
+    const [time, setTime] = useState(900); 
+
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setTime((prevTime) => prevTime - 1);
+        }, 1000);
+
+        return () => clearInterval(timer);
+    }, []);
+
+    const formatTime = (time) => {
+        const minutes = Math.floor(time / 60).toString().padStart(2, '0');
+        const seconds = (time % 60).toString().padStart(2, '0');
+        return `${minutes}:${seconds}`;
+    };
 
     async function handleSubmit(event) {
         event.preventDefault();
@@ -25,17 +52,35 @@ function Payment() {
         }
 
         let response;
+        let error;
 
         await axios.put("http://localhost:8080/reservations", body)
             .then(resp => response = resp.data)
             .catch(err => console.error(err));
 
+        if (error){
+            return;
+        }
+
+        const newData = {
+            ...reservationData,
+            client: body.client_mail
+        }
+
+        if (response) {
+            navigate("/summary", {state: newData});
+        }
     }
 
 
     return (
         <>
-            <div className="container-fluis">
+            <div className="container-fluid">
+                <div className="row">
+                    <div className="d-flex flex-row-reverse">
+                        <p>Time remaining: {formatTime(time)}</p>
+                    </div>
+                </div>
                 <div className="row">
                     <div className="col-6">
                         <h6>Movie: {reservationData.movie.film_name}</h6>

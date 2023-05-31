@@ -10,6 +10,7 @@ import AddScreening from './pages/AddScreening';
 import Reservation from './pages/Reservation';
 import ComingSoon from './pages/ComingSoon';
 import Payment from './pages/Payment';
+import Summary from './pages/Summary';
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
         <Route path="/addscreening" element={<AddScreening />} />
         <Route path="/reservation" element={<Reservation />} />
         <Route path="/payment" element={<Payment />} />
+        <Route path="/summary" element={<Summary />} />
       </Routes>
     </Layout>
   );
