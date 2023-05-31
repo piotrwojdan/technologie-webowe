@@ -19,6 +19,7 @@ public class SecurityConfig {
                     auth.anyRequest().permitAll();
                 })
                 .oauth2Login(Customizer.withDefaults())
+                .cors().and()
                 .build();
     }
 }
