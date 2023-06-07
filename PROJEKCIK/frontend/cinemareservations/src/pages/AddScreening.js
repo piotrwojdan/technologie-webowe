@@ -52,13 +52,13 @@ function AddScreening(props) {
         let response;
         let error;
         console.log(screeningData)
-        console.log(`Bearer ${props.user.access_token}`);
+        console.log(`Bearer ${props.user}`);
 
         await axios({
             method: 'POST', 
             url: 'http://localhost:8080/screenings',
             headers: {
-                Authorization: `Bearer ${props.user.access_token}`,
+                Authorization: `Bearer ${props.user}`,
                 'Content-Type': 'application/json',
             },
             data: screeningData,

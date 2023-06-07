@@ -1,25 +1,33 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios"
 import { useNavigate } from 'react-router-dom'
-import { useGoogleLogin, googleLogout } from "@react-oauth/google";
+import { useGoogleLogin, GoogleLogin, googleLogout } from "@react-oauth/google";
 
 
 function LoginPage(props) {
     const navigate = useNavigate();
 
     const [login, setLogin] = useState("");
-    const [haslo, setHaslo] = useState("");
+    const [haslo, setHaslo] = useState(""); 
 
+    function handleCallbackResponse(response) {
+        console.log(response.credential);
+        props.setUser(response.credential)
+        navigate("/admin");
+    }
 
-    const logIn = useGoogleLogin({
-        onSuccess: (codeResponse) => {
-            props.setUser(codeResponse)
-            navigate("/admin");
-        },
-        onError: (error) => console.log('Login Failed:', error)
-    });
+    useEffect(() => {
+        /* global google */
+        google.accounts.id.initialize({
+            client_id: "188786724390-1sl15llbffbfkpb80ha1q54jjhppro2j.apps.googleusercontent.com",
+            callback: handleCallbackResponse
+        });
 
-
+        google.accounts.id.renderButton(
+            document.getElementById("loginbutton"), 
+            { theme: "outline", size: "large" }
+        );
+    }, []);
 
 
     const logInUser = async () => {
@@ -59,8 +67,8 @@ function LoginPage(props) {
                     </button>
                 </div>
             </form>
-            <div style={{ display: "flex", justifyContent: "center" }}>
-                <button className="btn btn-primary px-5 my-2" onClick={() => logIn()}>SSO - Sign in with Google</button>
+            <div id="loginbutton" style={{ display: "flex", justifyContent: "center" }}>
+
             </div>
         </div>
     )
