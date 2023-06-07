@@ -52,26 +52,12 @@ public class SecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
                 .and()
-                .oauth2ResourceServer().jwt().decoder(jwtDecoder());
+                .oauth2ResourceServer().jwt()
+                .decoder(jwtDecoder());
                 http
                 .oauth2Login() //http://localhost:8000/api/oauth2/authorization/google
                 .userInfoEndpoint()
                 .userService(new DefaultOAuth2UserService());
-
-
-//                .and()
-//                .successHandler(new AuthenticationSuccessHandler() {
-//                    @Override
-//                    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-//                        OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
-//                        userService.processOAuthPostLogin(oAuth2User);
-//
-//                        AuthenticationResponse token = authenticationService.authenticate(new AuthenticationRequest(oAuth2User.getAttribute("email"), oAuth2User.getAttribute("sub")));
-//
-//                        response.sendRedirect("http://localhost:3000/login?t=" + token.getToken() + "&e=" + token.getExpiresIn());
-//
-//                    }
-//                });
 
 
         return http.build();
@@ -79,13 +65,9 @@ public class SecurityConfig {
 
     @Bean
     public JwtDecoder jwtDecoder() {
-        return NimbusJwtDecoder.withJwkSetUri(uri).build();
-    }
-
-    public OAuth2TokenValidator<Jwt> tokenValidator() {
-        final List<OAuth2TokenValidator<Jwt>> validators =
-                List.of(new JwtTimestampValidator(),
-                        new JwtIssuerValidator("http://foobar.com"));
-        return new DelegatingOAuth2TokenValidator<>(validators);
+        OAuth2TokenValidator<Jwt> jwtValidator = JwtValidators.createDefaultWithIssuer("https://accounts.google.com");
+        NimbusJwtDecoder jwtDecoder = NimbusJwtDecoder.withJwkSetUri(uri).build();
+        jwtDecoder.setJwtValidator(jwtValidator);
+        return jwtDecoder;
     }
 }
