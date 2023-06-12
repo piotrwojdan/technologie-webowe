@@ -5,9 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.webowe.projekt.CinemaReservations.exceptions.NotFoundException;
-import pl.webowe.projekt.CinemaReservations.models.Cinema;
 import pl.webowe.projekt.CinemaReservations.models.Screening;
-import pl.webowe.projekt.CinemaReservations.services.CinemaService;
 import pl.webowe.projekt.CinemaReservations.services.ScreeningService;
 
 import java.time.LocalDateTime;
@@ -32,7 +30,7 @@ public class ScreeningController {
     public ResponseEntity<Screening> getScreeningById(@PathVariable("id") long id){
         return new ResponseEntity<>(screeningService.getScreening(id), HttpStatus.OK);
     }
-
+// @RequestHeader("Authorization") String authorizationHeader,
     @PostMapping(value = "/screenings")
     public ResponseEntity<Screening> addScreening(@RequestBody ObjectNode json){
         if (!json.has("time") || !json.has("movie_id") || !json.has("room_id"))

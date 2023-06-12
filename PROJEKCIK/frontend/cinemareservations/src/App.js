@@ -1,4 +1,4 @@
-import logo from './logo.svg';
+import React,{ useState } from 'react';
 import './App.css';
 import { Routes, Route } from "react-router-dom";
 import Layout from './layout/Layout';
@@ -14,15 +14,22 @@ import Summary from './pages/Summary';
 
 
 function App() {
+  const [user, setUser] = useState();
+
+  function setUserApp(new_user) {
+    setUser(new_user);
+    console.log(user);
+  }
+  
   return (
-    <Layout>
+    <Layout user={user} setUser={setUserApp}>
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/repertuar"  element={<Repertuar />} />
         <Route path="/soon" element={<ComingSoon />} />
-        <Route path="/admin" element={<AdminPanel />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/addscreening" element={<AddScreening />} />
+        <Route path="/admin" element={<AdminPanel user={user} setUser={setUserApp}/>} />
+        <Route path="/login" element={<LoginPage user={user} setUser={setUserApp}/>} />
+        <Route path="/addscreening" element={<AddScreening user={user} setUser={setUserApp}/>} />
         <Route path="/reservation" element={<Reservation />} />
         <Route path="/payment" element={<Payment />} />
         <Route path="/summary" element={<Summary />} />

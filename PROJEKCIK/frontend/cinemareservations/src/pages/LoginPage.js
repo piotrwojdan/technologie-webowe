@@ -1,17 +1,38 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios"
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import { useGoogleLogin, GoogleLogin, googleLogout } from "@react-oauth/google";
 
-function LoginPage() {
 
-    const [login, setLogin] = useState("");
-    const [haslo, setHaslo] = useState("");
-
+function LoginPage(props) {
     const navigate = useNavigate();
 
-    const logInUser = async () => {
-        // tu logowanie z backa trzeba zrobic plus to sso 
+    const [login, setLogin] = useState("");
+    const [haslo, setHaslo] = useState(""); 
+
+    function handleCallbackResponse(response) {
+        console.log(response.credential);
+        props.setUser(response.credential)
         navigate("/admin");
+    }
+
+    useEffect(() => {
+        /* global google */
+        google.accounts.id.initialize({
+            client_id: "188786724390-1sl15llbffbfkpb80ha1q54jjhppro2j.apps.googleusercontent.com",
+            callback: handleCallbackResponse
+        });
+
+        google.accounts.id.renderButton(
+            document.getElementById("loginbutton"), 
+            { theme: "outline", size: "large" }
+        );
+    }, []);
+
+
+    const logInUser = async () => {
+        // tu by byla logika logowania gdyby byly zwykle konta
+        // natomiast jest ono realizowane poprzez sso dlatego zostanie tu pusto
     };
 
     return (
@@ -26,6 +47,7 @@ function LoginPage() {
                         value={login}
                         onChange={(e) => setLogin(e.target.value)}
                         id="login"
+                        required
                     />
                 </div>
                 <div className="form-group py-2">
@@ -36,12 +58,18 @@ function LoginPage() {
                         value={haslo}
                         onChange={(e) => setHaslo(e.target.value)}
                         id="password"
+                        required
                     />
                 </div>
-                <button className="btn btn-primary my-2" type="button" onClick={() => logInUser()}>
-                    Zaloguj
-                </button>
+                <div className="d-flex flex-row-reverse">
+                    <button className="btn btn-secondary my-2" type="button" onClick={() => logInUser()}>
+                        Log in
+                    </button>
+                </div>
             </form>
+            <div id="loginbutton" style={{ display: "flex", justifyContent: "center" }}>
+
+            </div>
         </div>
     )
 }

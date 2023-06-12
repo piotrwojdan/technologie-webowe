@@ -5,7 +5,7 @@ import React from 'react';
 
 function Layout(props){
   return (<div>
-    <MainNavigation/>
+    <MainNavigation user={props.user} setUser={props.setUser}/>
     <main className={classes.main}>{props.children}</main>
   </div>
   );
