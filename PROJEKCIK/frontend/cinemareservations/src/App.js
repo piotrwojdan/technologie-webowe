@@ -13,7 +13,7 @@ import Payment from './pages/Payment';
 
 
 function App() {
-  const [user, setUser] = useState([]);
+  const [user, setUser] = useState();
 
   function setUserApp(new_user) {
     setUser(new_user);

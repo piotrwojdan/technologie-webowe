@@ -13,6 +13,8 @@ function MainNavigation(props) {
     window.location.href = "/";
   }
 
+  console.log({user: props.user})
+
   return (
     <header className={classes.header}>
       <div className={classes.logo}><Link to='/'><h1>KinoMax</h1></Link></div>
